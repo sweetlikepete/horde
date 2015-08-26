@@ -1,0 +1,25 @@
+{
+  "name": "horde",
+  "version": "0.0.0",
+  "description": "A small library providing utility methods to facilitate common website build tasks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sweetlikepete/horde.git"
+  },
+  "keywords": [
+    "horde"
+  ],
+  "author": "Peter Bodechtel <sweetlikepete@gmail.com> (http://peterodactyl.com/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/sweetlikepete/horde/issues"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  }
+}
