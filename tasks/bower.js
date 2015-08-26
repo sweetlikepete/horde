@@ -1,12 +1,14 @@
-/**
- * Escape special characters in the given string of html.
- *
- * @param  {String} value
- * @return {String}
- */
+
+var utils = require("./../utils/utils.js");
+var expand = require("glob-expand");
+
 module.exports = {
 
-    install : function(){
+    install : function(obj){
+
+        for(var key in obj){
+            console.log(expand([key, "!**/node_modules/**/*.*", "!**/bower/**/*.*"]));
+        }
 
         return "bower install";
 

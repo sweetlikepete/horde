@@ -1,17 +1,10 @@
+
 module.exports = {
 
-   /**
-    * Escape special characters in the given string of html.
-    *
-    * @param  {String} value
-    * @return {String}
-    */
-    wtf : function(value) {
+    tasks : {
 
-        return "wtf:" + value;
+        bower : require("./tasks/bower.js")
 
-    },
-
-    bower : require('tasks/bower')
+    }
 
 }
