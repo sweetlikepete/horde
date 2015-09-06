@@ -4,8 +4,14 @@ var horde = require('../index');
 
 describe('#tasks.bower', function() {
 
+    console.log("WTF");
+
     horde.tasks.bower.install({
-        "/Users/peter/code/f8/primedia_group/**/bower.json" : "static/lib/bower"
+        "/Users/sweetlikepete/code/f8/primedia_group/src/web/modules/{frontend,backend}/bower.json" : "static/lib/bower"
+    }).then(function(result){
+
+        console.log("result");
+
     });
 
 });

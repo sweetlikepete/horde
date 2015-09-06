@@ -1,10 +1,8 @@
 
 module.exports = {
 
-    tasks : {
+    utils : require("./utils/utils.js"),
 
-        bower : require("./tasks/bower.js")
-
-    }
+    tasks : require("./tasks/tasks.js")
 
 }
