@@ -59,7 +59,7 @@ module.exports = {
 
     },
 
-    now : function(message){
+    complete : function(message){
 
         return new Promise(function(resolve, reject){
 
@@ -67,24 +67,14 @@ module.exports = {
 
             var now = new Date().getTime();
 
-            message = message || "Completed".cyan;
+            message = message || "Completed";
 
             console.log("");
 
             grunt.log.ok("{0} at {1}".format(
-                message,
+                message.cyan,
                 utils.formatDate(now)["green"]
             ));
-
-            resolve();
-
-        });
-
-    },
-
-    say : function(message){
-
-        return new Promise(function(resolve, reject){
 
             utils.execSync("say -v 'Zarvox' '{0}'&".format(message));
 

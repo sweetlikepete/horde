@@ -19,7 +19,6 @@ var utils = require("./../../utils/utils.js");
 var jscs = require("./lint.jscs.js");
 var jshint = require("./lint.jshint.js");
 var less = require("./lint.less.js");
-var sass = require("./lint.sass.js");
 
 
 /* ------------------------------------------------------------------------ */

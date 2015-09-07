@@ -20,6 +20,8 @@ module.exports = {
 
     display : require("./tasks.display.js"),
 
+    images : require("./images/images.js"),
+
     lint : require("./lint/lint.js")
 
 };
