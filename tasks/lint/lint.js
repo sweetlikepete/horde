@@ -34,29 +34,21 @@ module.exports = {
 
         var options = options || {};
 
-        var ext = function(paths, ext){
-
-            paths = paths.slice(0);
-
-            for(var i = 0; i < paths.length; i++){
-                paths[i] = paths[i] += "/**/*." + ext;
-                paths[i] = paths[i].replace(/\/\//g, "/");
-            }
-
-            return paths;
-
-        };
-
         return new Promise(function(resolve, reject){
 
             var folders = utils.files.expand(paths);
 
             var files = {
-                less : utils.files.expand(ext(paths, "less")),
-                js : utils.files.expand(ext(paths, "js"))
+                less : utils.files.expand(
+                    utils.files.addWildExtension(paths, "less")
+                ),
+                js : utils.files.expand(
+                    utils.files.addWildExtension(paths, "js")
+                )
             };
 
-            utils.promise().then(function(){
+            utils.promise()
+            .then(function(){
 
                 return jshint(files.js, options.jshint)
 

@@ -41,7 +41,9 @@ module.exports = function(paths, options){
 
     paths = paths || [];
 
-    files = utils.files.expand(paths);
+    files = utils.files.expand(
+        utils.files.addWildExtension(paths, "*@*x.{jpg,jpeg,png}.psd")
+    );
 
     options = utils.extend(config, options);
 
@@ -67,23 +69,23 @@ module.exports = function(paths, options){
                 return value <= this;
             };
 
-            for(var i = 0; i < files.length; i++){
+            files.forEach(function(file){
 
                 var re = /(.*?)@(\d)x.(.*).psd/i;
-                var format = files[i].replace(re, "$3");
-                var size = Number(files[i].replace(re, "$2"));
+                var format = file.replace(re, "$3");
+                var size = Number(file.replace(re, "$2"));
                 var sizes = options.multiples.filter(sizesFilter, size);
 
                 format = format === "jpg" ? "jpeg" : format;
 
                 targets.push({
-                    target : files[i],
+                    target : file,
                     format : format,
                     size : size,
                     sizes : sizes
                 });
 
-            }
+            });
 
             var processMatches = function(matches, index){
 
@@ -145,13 +147,13 @@ module.exports = function(paths, options){
             var imageCuts = [];
             var outputs = [];
 
-            for(var i = 0; i < matches.length; i++){
+            matches.forEach(function(match){
 
-                var target = matches[i].target;
+                var target = match.target;
                 var name = path.basename(target);
-                var size = matches[i].size;
+                var size = match.size;
                 var dir = path.dirname(target);
-                var sizes = matches[i].sizes;
+                var sizes = match.sizes;
                 var input = path.join(dir, "resized/.info/", name.replace(/.psd$/, ""));
                 var previous = path.join(dir, "resized/.info/previous/", name.replace(/.psd$/, ""));
                 var inputSize = sizeOf(input);
@@ -187,7 +189,7 @@ module.exports = function(paths, options){
 
                 }
 
-            }
+            });
 
             var cutImages = function(cuts, index){
 
@@ -246,12 +248,21 @@ module.exports = function(paths, options){
 
         grunt.log.ok("{0} : {1} found".format(
             "image.responsive"["cyan"],
-            "{0} files"["green"].format(files.length)
+            "{0} {1}"["green"].format(files.length, grunt.util.pluralize(files, "files/file"))
         ));
 
         compileMatches(files, function(matches){
 
             cutResponsiveImages(matches, function(outputs){
+
+                if(!outputs){
+
+                    grunt.log.ok("{0} : {1} skipped".format(
+                        "image.responsive"["cyan"],
+                        "{0} {1}"["green"].format(files.length, grunt.util.pluralize(files, "files/file"))
+                    ));
+
+                }
 
                 compress(outputs).then(resolve);
 

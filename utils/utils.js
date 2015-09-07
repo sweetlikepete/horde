@@ -35,11 +35,11 @@ String.prototype.format = function(){
 
         }else{
 
-            for(var i = 0; i < args.length; i++){
-                if(typeof args[i] === "object" && typeof args[i][key] !== "undefined"){
-                    return args[i][key];
+            args.forEach(function(arg){
+                if(typeof arg === "object" && typeof arg[key] !== "undefined"){
+                    return arg[key];
                 }
-            }
+            });
 
             return match;
 

@@ -78,13 +78,14 @@ module.exports = {
     set : function(files, task, method){
 
         var cache = this.getAll();
+        var self = this;
 
         cache[task] = cache[task] || {};
         cache[task][method] = cache[task][method] || {};
 
-        for(var i = 0; i < files.length; i++){
-            cache[task][method][files[i]] = this.hashFile(files[i]);
-        }
+        files.forEach(function(file){
+            cache[task][method][file] = self.hashFile(file);
+        });
 
         this.setAll(cache);
 
@@ -112,20 +113,25 @@ module.exports = {
 
         var tag = ("{0}.{1}".format(task, method))["cyan"];
         var selects = [];
+        var self = this;
 
-        for(var i = 0; i < files.length; i++){
+        files.forEach(function(file){
 
-            if(cache[files[i]] !== this.hashFile(files[i])){
-                selects.push(files[i]);
+            if(cache[file] !== self.hashFile(file)){
+                selects.push(file);
             }
 
-        }
+        });
 
-        grunt.log.ok(tag + " : " + (String(files.length) + " files")["green"] + " found");
+        var formatCount = function(num){
+            return "{0} {1}".format(num, grunt.util.pluralize(num, "file/files")).green;
+        };
+
+        grunt.log.ok("{0} : {1} {2}".format(tag, formatCount(files.length), "found"));
 
         if(selects.length !== files.length){
 
-            grunt.log.ok(tag + " : " + (String(files.length - selects.length) + " files")["green"] + " skipped");
+            grunt.log.ok("{0} : {1} {2}".format(tag, formatCount(files.length - selects.length), "skipped"));
 
         }
 

@@ -26,7 +26,7 @@ module.exports = {
 
         if(!errors.length){
 
-            console.log("No {0} code style errors found.".format(type));
+            grunt.log.ok("{0} : No code style errors found.".format("{0}.{1}".format("lint", type).cyan));
 
             return typeof callback === "function" ? callback() : true;
 

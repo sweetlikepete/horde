@@ -192,6 +192,11 @@ module.exports = function(paths, options){
     files = utils.files.expand(paths);
     files = utils.cache.filter(files, "lint", "jscs");
 
+    files = files.filter(function(value){
+        var suffix = ".min.js";
+        return value.toLowerCase().indexOf(suffix, value.length - suffix.length) === -1;
+    });
+
     return new Promise(function(resolve, reject){
 
         if(!files || files.length === 0){
@@ -222,7 +227,7 @@ module.exports = function(paths, options){
 
                     }else{
 
-                        if(utils.validate.code(errors, "JSCS")){
+                        if(utils.validate.code(errors, "jscs")){
 
                             utils.cache.set(files, "lint", "jscs");
 
@@ -238,22 +243,20 @@ module.exports = function(paths, options){
 
                 jscs.checkFile(files[index]).then(function(errs){
 
-                    if(errs){
+                    if(errs && errs["_errorList"]){
 
-                        errs = errs["_errorList"];
-
-                        for(var i = 0; i < errs.length; i++){
+                        errs["_errorList"].forEach(function(error){
 
                             errors.push({
-                                character : errs[i].column + 3,
-                                reason : errs[i].message,
-                                line : errs[i].line,
+                                character : error.column + 3,
+                                reason : error.message,
+                                line : error.line,
                                 file : files[index],
                                 description : "",
                                 code : code
                             });
 
-                        }
+                        });
 
                     }
 

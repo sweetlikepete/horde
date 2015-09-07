@@ -29,7 +29,9 @@ module.exports = function(paths){
 
     paths = paths || [];
 
-    files = utils.files.expand(paths);
+    files = utils.files.expand(
+        utils.files.addWildExtension(paths, "*.resize.json")
+    );
 
     return new Promise(function(resolve, reject){
 
@@ -51,15 +53,15 @@ module.exports = function(paths){
 
             var targets = [];
 
-            for(var i = 0; i < files.length; i++){
+            files.forEach(function(file){
 
-                var dir = path.dirname(files[i]);
+                var dir = path.dirname(file);
                 var targetDir = path.join(dir, "resized/.info/target");
-                var json = grunt.file.readJSON(files[i]);
+                var json = grunt.file.readJSON(file);
 
-                cache[files[i]] = json;
+                cache[file] = json;
 
-                for(var image in cache[files[i]]){
+                for(var image in cache[file]){
 
                     var target = {
                         png : path.join(targetDir, image),
@@ -78,7 +80,7 @@ module.exports = function(paths){
 
                 }
 
-            }
+            });
 
             var processTargetCuts = function(cuts, index){
 
@@ -150,10 +152,10 @@ module.exports = function(paths){
             var sizes = [];
             var outputs = [];
 
-            for(var i = 0; i < files.length; i++){
+            files.forEach(function(file){
 
-                var config = cache[files[i]] || grunt.file.readJSON(files[i]);
-                var dir = path.dirname(files[i]);
+                var config = cache[file] || grunt.file.readJSON(file);
+                var dir = path.dirname(file);
 
                 for(var image in config){
 
@@ -202,7 +204,7 @@ module.exports = function(paths){
 
                 }
 
-            }
+            });
 
             var processResizes = function(resizes, index){
 
@@ -257,6 +259,15 @@ module.exports = function(paths){
         cutTargets(function(){
 
             cutSizes(function(outputs){
+
+                if(!outputs){
+
+                    grunt.log.ok("{0} : {1} skipped".format(
+                        "image.sizes"["cyan"],
+                        "{0} files"["green"].format(files.length)
+                    ));
+
+                }
 
                 compress(outputs).then(resolve);
 

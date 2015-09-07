@@ -54,6 +54,11 @@ module.exports = function(paths, options){
     files = utils.files.expand(paths);
     files = utils.cache.filter(files, "lint", "jshint");
 
+    files = files.filter(function(value){
+        var suffix = ".min.js";
+        return value.toLowerCase().indexOf(suffix, value.length - suffix.length) === -1;
+    });
+
     return new Promise(function(resolve, reject){
 
         if(!files || files.length === 0){
@@ -66,9 +71,9 @@ module.exports = function(paths, options){
 
         var errors = [];
 
-        for(var i = 0; i < files.length; i++){
+        files.forEach(function(file){
 
-            var code = fs.readFileSync(files[i], "utf8");
+            var code = fs.readFileSync(file, "utf8");
 
             jshint(code, options);
 
@@ -80,8 +85,8 @@ module.exports = function(paths, options){
                         character : jshint.errors[j].character,
                         reason : jshint.errors[j].reason,
                         line : jshint.errors[j].line,
-                        file : files[i],
                         description : "",
+                        file : file,
                         code : code
                     });
 
@@ -89,9 +94,9 @@ module.exports = function(paths, options){
 
             }
 
-        }
+        });
 
-        if(utils.validate.code(errors, "JSHint")){
+        if(utils.validate.code(errors, "jshint")){
             utils.cache.set(files, "lint", "jshint");
         }
 

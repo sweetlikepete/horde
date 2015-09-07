@@ -63,7 +63,7 @@ module.exports = function(paths, options){
     options.lint = utils.extend(config, options.lint);
 
     files = utils.files.expand(paths);
-    files = utils.cache.filter(files, "lint", "lesslint");
+    files = utils.cache.filter(files, "lint", "less");
 
     return new Promise(function(resolve, reject){
 
@@ -99,9 +99,9 @@ module.exports = function(paths, options){
 
                         }else{
 
-                            utils.validate.code(errors, "LessLint", function(){
+                            utils.validate.code(errors, "less", function(){
 
-                                utils.cache.set(files, "lint", "lesslint");
+                                utils.cache.set(files, "lint", "less");
 
                                 resolve();
 
