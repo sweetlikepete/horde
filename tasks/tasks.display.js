@@ -73,7 +73,7 @@ module.exports = {
 
             grunt.log.ok("{0} at {1}".format(
                 message.cyan,
-                utils.formatDate(now)["green"]
+                utils.formatDate(now).green
             ));
 
             utils.execSync("say -v 'Zarvox' '{0}'&".format(message));

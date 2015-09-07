@@ -111,7 +111,7 @@ module.exports = {
 
         var cache = this.get(task, method);
 
-        var tag = ("{0}.{1}".format(task, method))["cyan"];
+        var tag = ("{0}.{1}".format(task, method)).cyan;
         var selects = [];
         var self = this;
 
@@ -124,10 +124,10 @@ module.exports = {
         });
 
         var formatCount = function(num){
-            return "{0} {1}".format(num, grunt.util.pluralize(num, "file/files")).green;
+            return "{0} {1}".format(num, grunt.util.pluralize(num, "file/files"));
         };
 
-        grunt.log.ok("{0} : {1} {2}".format(tag, formatCount(files.length), "found"));
+        grunt.log.ok("{0} : {1} {2}".format(tag, formatCount(files.length), "scanned"));
 
         if(selects.length !== files.length){
 

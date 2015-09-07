@@ -18,6 +18,12 @@ module.exports = {
 
     cache : require("./utils.cache.js"),
 
+    shorten : function(path){
+
+        return path.replace(process.cwd() + "/", "");
+
+    },
+
     expand : function(paths){
 
         paths = paths.slice(0);
@@ -84,7 +90,7 @@ module.exports = {
 
     },
 
-    writeMinification : function(dest, output, original){
+    writeMinification : function(dest, output, original, label){
 
         var humanize = require("humanize");
         var grunt = require("grunt");
@@ -96,10 +102,11 @@ module.exports = {
         var stat1 = fs.statSync(original);
         var stat2 = fs.statSync(dest);
 
-        grunt.log.ok("File {0} created: {1} → {2}".format(
-            dest["cyan"],
-            humanize.filesize(stat1["size"])["green"],
-            humanize.filesize(stat2["size"])["green"]
+        grunt.log.ok("{0} : File created : {1} {2} → {3}".format(
+            label.cyan,
+            this.shorten(dest).grey,
+            humanize.filesize(stat1["size"]).green,
+            humanize.filesize(stat2["size"]).green
         ));
 
     }

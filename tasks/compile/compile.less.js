@@ -71,9 +71,10 @@ module.exports = function(paths, options){
 
                     var stat = fs.statSync(output);
 
-                    grunt.log.ok("File {0} created: {1}".format(
-                        output["cyan"],
-                        humanize.filesize(stat["size"])["green"]
+                    grunt.log.ok("{0} : File created : {1} → {2}".format(
+                        "compile.less".cyan,
+                        utils.files.shorten(output).grey,
+                        humanize.filesize(stat["size"]).green
                     ));
 
                     if(!last){

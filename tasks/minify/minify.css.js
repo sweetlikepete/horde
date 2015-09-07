@@ -31,6 +31,12 @@ module.exports = function(paths, options){
     options = options || {};
 
     files = utils.files.expand(paths);
+
+    files = files.filter(function(value){
+        var suffix = ".min.css";
+        return value.toLowerCase().indexOf(suffix, value.length - suffix.length) === -1;
+    });
+
     files = utils.cache.filter(files, "minify", "css");
 
     return new Promise(function(resolve, reject){
@@ -58,7 +64,7 @@ module.exports = function(paths, options){
 
             if(dest !== file){
 
-                utils.files.writeMinification(dest, code, file);
+                utils.files.writeMinification(dest, code, file, "minify.css");
 
             }
 

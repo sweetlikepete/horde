@@ -99,8 +99,8 @@ module.exports = function(paths){
                         if(grunt.option("verbose")){
 
                             grunt.log.ok("Temp {0} created: {1}".format(
-                                cuts[index].png["cyan"],
-                                humanize.filesize(stat["size"])["green"]
+                                utils.files.shorten(cuts[index].png).grey,
+                                humanize.filesize(stat["size"]).green
                             ));
 
                         }
@@ -216,9 +216,10 @@ module.exports = function(paths){
 
                         var stat = fs.statSync(resizes[index].output.path);
 
-                        grunt.log.ok("File {0} cut: {1}".format(
-                            resizes[index].output.path["cyan"],
-                            humanize.filesize(stat["size"])["green"]
+                        grunt.log.ok("{0} : Image cut : {1} → {2}".format(
+                            "images.sizes".cyan,
+                            utils.files.shorten(resizes[index].output.path).grey,
+                            humanize.filesize(stat["size"]).green
                         ));
 
                         outputs.push(resizes[index].output.path);
@@ -252,8 +253,8 @@ module.exports = function(paths){
         };
 
         grunt.log.ok("{0} : {1} found".format(
-            "image.sizes"["cyan"],
-            "{0} files"["green"].format(files.length)
+            "images.sizes".cyan,
+            "{0} files".format(files.length)
         ));
 
         cutTargets(function(){
@@ -263,8 +264,8 @@ module.exports = function(paths){
                 if(!outputs){
 
                     grunt.log.ok("{0} : {1} skipped".format(
-                        "image.sizes"["cyan"],
-                        "{0} files"["green"].format(files.length)
+                        "images.sizes".cyan,
+                        "{0} files".format(files.length)
                     ));
 
                 }

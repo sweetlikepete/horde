@@ -76,10 +76,9 @@ module.exports = {
 
                     };
 
-                    grunt.log.ok("{0} : {1} {2}".format(
-                        "bower"["cyan"],
-                        "install"["green"],
-                        files[index]
+                    grunt.log.ok("{0} : Running : {1}".format(
+                        "bower.install".cyan,
+                        utils.files.shorten(files[index]).grey
                     ));
 
                     bower.commands.install(

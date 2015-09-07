@@ -52,12 +52,13 @@ module.exports = function(paths, options){
     options = utils.extend(config, options);
 
     files = utils.files.expand(paths);
-    files = utils.cache.filter(files, "lint", "jshint");
 
     files = files.filter(function(value){
         var suffix = ".min.js";
         return value.toLowerCase().indexOf(suffix, value.length - suffix.length) === -1;
     });
+
+    files = utils.cache.filter(files, "lint", "jshint");
 
     return new Promise(function(resolve, reject){
 

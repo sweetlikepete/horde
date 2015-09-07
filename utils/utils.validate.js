@@ -71,7 +71,7 @@ module.exports = {
             });
 
             console.log("");
-            console.log(error.reason["white"].bold + " " + error.file["green"] + " :");
+            console.log(error.reason["white"].bold + " " + error.file.green + " :");
 
             if(error.description){
                 console.log(error.description["grey"]);

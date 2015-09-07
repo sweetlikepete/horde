@@ -60,10 +60,11 @@ module.exports = function(paths){
 
                     var stat2 = fs.statSync(files[index]);
 
-                    grunt.log.ok("File {0} compressed: {1} → {2}".format(
-                        files[index]["cyan"],
-                        humanize.filesize(stat1["size"])["green"],
-                        humanize.filesize(stat2["size"])["green"]
+                    grunt.log.ok("{0} : File compressed : {1} {2} → {3}".format(
+                        "images.compress".cyan,
+                        utils.files.shorten(files[index]).grey,
+                        humanize.filesize(stat1["size"]).green,
+                        humanize.filesize(stat2["size"]).green
                     ));
 
                     if(files[index + 1]){

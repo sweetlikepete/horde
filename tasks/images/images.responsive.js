@@ -205,9 +205,10 @@ module.exports = function(paths, options){
 
                         var stat = fs.statSync(cuts[index].output.path);
 
-                        grunt.log.ok("File {0} cut: {1}".format(
-                            cuts[index].output.path["cyan"],
-                            humanize.filesize(stat["size"])["green"]
+                        grunt.log.ok("{0} : File cut: {1} → {2}".format(
+                            "images.responsive".cyan,
+                            utils.files.shorten(cuts[index].output.path).grey,
+                            humanize.filesize(stat["size"]).green
                         ));
 
                         outputs.push(cuts[index].output.path);
@@ -247,8 +248,8 @@ module.exports = function(paths, options){
         };
 
         grunt.log.ok("{0} : {1} found".format(
-            "image.responsive"["cyan"],
-            "{0} {1}"["green"].format(files.length, grunt.util.pluralize(files, "files/file"))
+            "images.responsive".cyan,
+            "{0} {1}".format(files.length, grunt.util.pluralize(files, "files/file"))
         ));
 
         compileMatches(files, function(matches){
@@ -258,8 +259,8 @@ module.exports = function(paths, options){
                 if(!outputs){
 
                     grunt.log.ok("{0} : {1} skipped".format(
-                        "image.responsive"["cyan"],
-                        "{0} {1}"["green"].format(files.length, grunt.util.pluralize(files, "files/file"))
+                        "images.responsive".cyan,
+                        "{0} {1}".format(files.length, grunt.util.pluralize(files, "files/file"))
                     ));
 
                 }
