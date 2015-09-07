@@ -20,6 +20,8 @@ module.exports = {
 
     expand : function(paths){
 
+        paths = paths.slice(0);
+
         var grunt = require("grunt");
         var path = require("path");
 

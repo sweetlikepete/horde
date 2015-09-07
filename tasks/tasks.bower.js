@@ -14,10 +14,6 @@
 /* ------------------------------------------------------------------------ */
 
 
-var grunt = require("grunt");
-var bower = require("bower");
-var path = require("path");
-
 var utils = require("./../utils/utils.js");
 
 
@@ -45,6 +41,10 @@ module.exports = {
             if(!files || files.length === 0){
                 return resolve();
             }
+
+            var grunt = require("grunt");
+            var bower = require("bower");
+            var path = require("path");
 
             var log = function(result){
                 grunt.log.writeln(["bower", result.id.cyan, result.message].join(" "));

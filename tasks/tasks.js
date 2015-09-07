@@ -18,6 +18,8 @@ module.exports = {
 
     bower : require("./tasks.bower.js"),
 
+    display : require("./tasks.display.js"),
+
     lint : require("./lint/lint.js")
 
 };

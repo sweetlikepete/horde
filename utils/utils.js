@@ -59,6 +59,30 @@ String.prototype.format = function(){
 
 module.exports = {
 
+    formatDate : function(time, format){
+
+        var dateFormat = require("dateformat");
+
+        return dateFormat(time, format || "h:MM:ss TT");
+
+    },
+
+    promise : function(){
+
+        return new Promise(function(resolve, reject){
+
+            resolve();
+
+        });
+
+    },
+
+    execSync : function(command){
+
+        require("child_process").execSync(command, { stdio : [0, 1, 2] });
+
+    },
+
     extend : require("node.extend"),
 
     cache : require("./utils.cache.js"),
