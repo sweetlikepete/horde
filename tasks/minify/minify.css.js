@@ -26,17 +26,10 @@ var utils = require("./../../utils/utils.js");
 
 module.exports = function(paths, options){
 
-    paths = paths || [];
-
     options = options || {};
 
     files = utils.files.expand(paths);
-
-    files = files.filter(function(value){
-        var suffix = ".min.css";
-        return value.toLowerCase().indexOf(suffix, value.length - suffix.length) === -1;
-    });
-
+    files = utils.files.filterExt(files, ".min.css");
     files = utils.cache.filter(files, "minify", "css");
 
     return new Promise(function(resolve, reject){

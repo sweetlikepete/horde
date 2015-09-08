@@ -26,8 +26,6 @@ var utils = require("./../../utils/utils.js");
 
 module.exports = function(paths){
 
-    paths = paths || [];
-
     if(typeof paths === "string"){
         paths = [paths];
     }

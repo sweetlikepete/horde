@@ -26,14 +26,9 @@ var utils = require("./../utils/utils.js");
 
 module.exports = {
 
-    install : function(paths, options){
+    install : function(paths, destination){
 
-        paths = paths || [];
-
-        options = options || {};
-        options.dest = options.dest || "bower";
-
-        files = utils.files.expand(paths);
+        files = utils.files.expand(paths, "bower.json");
         files = utils.cache.filter(files, "bower", "install");
 
         return new Promise(function(resolve, reject){
@@ -88,7 +83,7 @@ module.exports = {
                         },
                         {
                             cwd : path.dirname(files[index]),
-                            directory : options.dest
+                            directory : destination
                         }
                     )
                     .on("log", log)

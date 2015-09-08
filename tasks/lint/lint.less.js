@@ -56,8 +56,6 @@ var config = {
 
 module.exports = function(paths, options){
 
-    paths = paths || [];
-
     options = options || {};
     options.lint = options.less || {};
     options.lint = utils.extend(config, options.lint);

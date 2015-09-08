@@ -157,14 +157,22 @@ module.exports = {
 
     clean : function(){
 
-        var cache = this.getAll();
+        var self = this;
 
-        if(fs.existsSync(config.path)){
-            fs.unlinkSync(config.path);
-        }
+        return new Promise(function(resolve, reject){
 
-        this.setAll({
-            prompt : cache.prompt
+            var cache = self.getAll();
+
+            if(fs.existsSync(config.path)){
+                fs.unlinkSync(config.path);
+            }
+
+            self.setAll({
+                prompt : cache.prompt
+            });
+
+            resolve();
+
         });
 
     }

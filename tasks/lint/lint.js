@@ -39,12 +39,8 @@ module.exports = {
             var folders = utils.files.expand(paths);
 
             var files = {
-                less : utils.files.expand(
-                    utils.files.addWildExtension(paths, "less")
-                ),
-                js : utils.files.expand(
-                    utils.files.addWildExtension(paths, "js")
-                )
+                less : utils.files.expand(paths, "less"),
+                js : utils.files.expand(paths, "js")
             };
 
             utils.promise()

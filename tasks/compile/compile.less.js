@@ -26,8 +26,6 @@ var utils = require("./../../utils/utils.js");
 
 module.exports = function(paths, options){
 
-    paths = paths || [];
-
     options = options || {};
 
     files = utils.files.expand(paths);

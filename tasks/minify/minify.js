@@ -38,12 +38,8 @@ module.exports = {
             var folders = utils.files.expand(paths);
 
             var files = {
-                css : utils.files.expand(
-                    utils.files.addWildExtension(paths, "css")
-                ),
-                js : utils.files.expand(
-                    utils.files.addWildExtension(paths, "js")
-                )
+                css : utils.files.expand(paths, "css"),
+                js : utils.files.expand(paths, "js")
             };
 
             utils.promise()

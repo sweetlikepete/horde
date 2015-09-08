@@ -24,7 +24,21 @@ module.exports = {
 
     },
 
-    expand : function(paths){
+    filterExt : function(paths, extension){
+
+        return paths.filter(function(value){
+            return value.toLowerCase().indexOf(extension, value.length - extension.length) === -1;
+        });
+
+    },
+
+    expand : function(paths, extension){
+
+        paths = paths || [];
+
+        if(extension){
+            paths = this.addWildExtension(paths, extension);
+        }
 
         paths = paths.slice(0);
 
@@ -62,7 +76,11 @@ module.exports = {
 
         for(var i = 0; i < paths.length; i++){
 
-            paths[i] = paths[i] += "/**/" + (ext.indexOf("*") === -1 ? "*." + ext : ext);
+            if(ext.match(/^[a-z0-9]+$/i)){
+                ext = "*." + ext;
+            }
+
+            paths[i] = paths[i] += "/**/" + ext;
             paths[i] = paths[i].replace(/\/\//g, "/");
 
         }

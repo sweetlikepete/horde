@@ -185,17 +185,10 @@ var config = {
 
 module.exports = function(paths, options){
 
-    paths = paths || [];
-
     options = utils.extend(config, options);
 
     files = utils.files.expand(paths);
-
-    files = files.filter(function(value){
-        var suffix = ".min.js";
-        return value.toLowerCase().indexOf(suffix, value.length - suffix.length) === -1;
-    });
-
+    files = utils.files.filterExt(files, ".min.js");
     files = utils.cache.filter(files, "lint", "jscs");
 
     return new Promise(function(resolve, reject){

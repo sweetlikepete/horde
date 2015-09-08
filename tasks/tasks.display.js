@@ -14,10 +14,6 @@
 /* ------------------------------------------------------------------------ */
 
 
-var grunt = require("grunt");
-var bower = require("bower");
-var path = require("path");
-
 var utils = require("./../utils/utils.js");
 
 
@@ -64,7 +60,6 @@ module.exports = {
         return new Promise(function(resolve, reject){
 
             var grunt = require("grunt");
-
             var now = new Date().getTime();
 
             message = message || "Completed";

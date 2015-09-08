@@ -26,19 +26,25 @@ var utils = require("./../utils/utils.js");
 
 module.exports = function(paths){
 
-    files = utils.files.expand(paths);
-
     return new Promise(function(resolve, reject){
 
-        var grunt = require("grunt");
+        files = utils.files.expand(paths);
 
-        files.forEach(function(file){
+        return new Promise(function(resolve, reject){
 
-            grunt.file.delete(file);
+            var grunt = require("grunt");
 
-            grunt.log.ok("{0} : {1}".format("clean".cyan, file.green));
+            files.forEach(function(file){
+
+                grunt.file.delete(file);
+
+                grunt.log.ok("{0} : {1}".format("clean".cyan, file.green));
+
+            });
 
         });
+
+        resolve();
 
     });
 

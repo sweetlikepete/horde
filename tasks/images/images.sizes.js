@@ -27,11 +27,7 @@ var compress = require("./images.compress.js");
 
 module.exports = function(paths){
 
-    paths = paths || [];
-
-    files = utils.files.expand(
-        utils.files.addWildExtension(paths, "*.resize.json")
-    );
+    files = utils.files.expand(paths, "*.resize.json");
 
     return new Promise(function(resolve, reject){
 

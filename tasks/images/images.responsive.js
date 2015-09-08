@@ -39,13 +39,9 @@ var config = {
 
 module.exports = function(paths, options){
 
-    paths = paths || [];
-
-    files = utils.files.expand(
-        utils.files.addWildExtension(paths, "*@*x.{jpg,jpeg,png}.psd")
-    );
-
     options = utils.extend(config, options);
+
+    files = utils.files.expand(paths, "*@*x.{jpg,jpeg,png}.psd");
 
     return new Promise(function(resolve, reject){
 

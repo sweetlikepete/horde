@@ -22,6 +22,8 @@ module.exports = {
 
     compile : require("./compile/compile.js"),
 
+    compress : require("./tasks.compress.js"),
+
     display : require("./tasks.display.js"),
 
     images : require("./images/images.js"),
