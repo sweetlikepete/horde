@@ -26,10 +26,14 @@ module.exports = {
 
     display : require("./tasks.display.js"),
 
+    gae : require("./tasks.gae.js"),
+
     images : require("./images/images.js"),
 
     lint : require("./lint/lint.js"),
 
-    minify : require("./minify/minify.js")
+    minify : require("./minify/minify.js"),
+
+    prompt : require("./tasks.prompt.js")
 
 };

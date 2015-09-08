@@ -5,15 +5,21 @@ A small library providing utility methods to assist in common website build task
 
 ## Installation
 
-  npm install horde --save
+  ```npm install horde --save```
+
+## Requirements
+
+Some image related tasks require graphicsmagick be installed on your machine. On OSX...
+
+  ```brew install graphicsmagick```
 
 ## Usage
 
-  var horde = require('horde')
+  ```var horde = require('horde')```
 
 ## Tests
 
-  npm test
+  ```npm test```
 
 ## Contributing
 
