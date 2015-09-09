@@ -43,6 +43,8 @@ module.exports = function(paths, options){
         var path = require("path");
         var fs = require("fs");
 
+        var outputs = [];
+
         var processLess = function(files, index){
 
             index = index || 0;
@@ -67,6 +69,8 @@ module.exports = function(paths, options){
 
                     grunt.file.write(output, response.css);
 
+                    outputs.push(output);
+
                     var stat = fs.statSync(output);
 
                     grunt.log.ok("{0} : File created : {1} → {2}".format(
@@ -83,7 +87,7 @@ module.exports = function(paths, options){
 
                         utils.cache.set(files, "compile", "less");
 
-                        resolve();
+                        resolve(outputs);
 
                     }
 

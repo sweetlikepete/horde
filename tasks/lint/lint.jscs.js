@@ -188,7 +188,7 @@ module.exports = function(paths, options){
     options = utils.extend(config, options);
 
     files = utils.files.expand(paths);
-    files = utils.files.filterExt(files, ".min.js");
+    files = utils.files.filterExt(files, [".min.js", "-min.js"]);
     files = utils.cache.filter(files, "lint", "jscs");
 
     return new Promise(function(resolve, reject){
@@ -256,7 +256,7 @@ module.exports = function(paths, options){
 
                     next();
 
-                }, function(){ console.log("WTF"); });
+                });
 
             }
 

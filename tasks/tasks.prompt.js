@@ -160,8 +160,6 @@ module.exports = {
 
                     }else{
 
-                        console.log("wtf");
-
                         resolve(data);
 
                     }

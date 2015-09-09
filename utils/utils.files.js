@@ -24,17 +24,31 @@ module.exports = {
 
     },
 
-    filterExt : function(paths, extension){
+    filterExt : function(paths, extensions){
 
-        return paths.filter(function(value){
-            return value.toLowerCase().indexOf(extension, value.length - extension.length) === -1;
+        if(typeof(extensions) === "string"){
+            extensions = [extensions];
+        }
+
+        extensions.forEach(function(extension){
+
+            paths = paths.filter(function(value){
+                return value.toLowerCase().indexOf(extension, value.length - extension.length) === -1;
+            });
+
         });
+
+        return paths;
 
     },
 
     expand : function(paths, extension){
 
         paths = paths || [];
+
+        if(typeof paths === "string"){
+            paths = [paths];
+        }
 
         if(extension){
             paths = this.addWildExtension(paths, extension);
@@ -44,10 +58,6 @@ module.exports = {
 
         var grunt = require("grunt");
         var path = require("path");
-
-        if(typeof paths === "string"){
-            paths = [paths];
-        }
 
         for(var i = 0; i < paths.length; i++){
 
@@ -105,6 +115,20 @@ module.exports = {
         }
 
         return dest;
+
+    },
+
+    writeJSON : function(file, json, options){
+
+        var jsonfile = require("jsonfile");
+        var grunt = require("grunt");
+        var path = require("path");
+
+        options = options || { spaces : 2 };
+
+        grunt.file.mkdir(path.dirname(file));
+
+        jsonfile.writeFileSync(file, json, options);
 
     },
 

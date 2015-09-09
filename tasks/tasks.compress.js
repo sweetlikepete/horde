@@ -15,9 +15,8 @@
 
 
 var utils = require("./../utils/utils.js");
-
-var css = require("./minify/minify.css.js");
-var js = require("./minify/minify.js.js");
+var minify = require("./minify/minify.js");
+var compile = require("./compile/compile.js");
 
 
 /* ------------------------------------------------------------------------ */
@@ -105,79 +104,114 @@ var getGroups = function(files){
 
 var combine = function(type, output, files, options){
 
-    var humanize = require("humanize");
-    var grunt = require("grunt");
-    var path = require("path");
-    var fs = require("fs");
+    return new Promise(function(resolve, reject){
 
-    var source = "";
-    var cwd = process.cwd() + "/";
+        var humanize = require("humanize");
+        var grunt = require("grunt");
+        var path = require("path");
+        var fs = require("fs");
 
-    output = path.join(options.bundle.cwd, (options.bundle.dest || ""), output);
+        var source = "";
 
-    if(!files.length){
-        return;
-    }
+        output = path.join(options.bundle.cwd, (options.bundle.dest || ""), output);
 
-    for(var i = 0; i < files.length; i++){
-
-        var file = path.join(options.bundle.cwd, files[i]);
-        var out = String(file);
-        var ext = path.extname(file);
-
-        if(ext === ".js" && !file.match(/[\.\-]min\.js$/g)){
-            out = out.replace(/(.*?).js$/g, "$1.min.js");
-        }else if(ext === ".css" && !file.match(/[\.\-]min\.css$/g)){
-            out = out.replace(/(.*?).css$/g, "$1.min.css");
-        }else if(ext === ".less"){
-            out = out.replace(/(.*?).less$/g, "$1.min.css");
+        if(!files.length){
+            return resolve();
         }
 
-        if(!fs.existsSync(out)){
+        var processFiles = function(files, index){
 
-            out = utils.files.getRelativePath(out, options.minify);
+            index = index || 0;
 
-            if(!fs.existsSync(out)){
+            if(files[index]){
 
-                if(ext === ".js"){
-                    minify.js([file], options.minify);
-                }else if(ext === ".css"){
-                    minify.css([file], options.minify);
+                var next = function(){
+
+                    if(files[index + 1]){
+
+                        processFiles(files, index + 1);
+
+                    }else{
+
+                        grunt.file.write(output, source);
+
+                        var stat = fs.statSync(output);
+
+                        grunt.log.ok("{0} : File created : {1} → {2}".format(
+                            "compress.bundles".cyan,
+                            utils.files.shorten(output).grey,
+                            humanize.filesize(stat["size"]).green
+                        ));
+
+                        resolve();
+
+                    }
+
+                };
+
+                var file = path.join(options.bundle.cwd, files[index]);
+                var ext = path.extname(file);
+                var out = String(file);
+
+                if(ext === ".js" && !file.match(/[\.\-]min\.js$/g)){
+                    out = out.replace(/(.*?).js$/g, "$1.min.js");
+                }else if(ext === ".css" && !file.match(/[\.\-]min\.css$/g)){
+                    out = out.replace(/(.*?).css$/g, "$1.min.css");
+                }else if(ext === ".less"){
+                    out = out.replace(/(.*?).less$/g, "$1.min.css");
+                }
+
+                var done = function(){
+
+                    if(!fs.existsSync(out)){
+                        grunt.fail.fatal("File not found {0}".format(utils.files.shorten(out)));
+                    }
+
+                    var data = fs.readFileSync(out, "utf8");
+
+                    if(options.debug){
+
+                        if(type === "css"){
+                            source += "/* {1} */\n{0}\n".format(data, file);
+                        }else if(type === "js"){
+                            source += "// {1}\n{0}\n".format(data, file);
+                        }
+
+                    }else{
+                        source += "\n" + data;
+                    }
+
+                    next();
+
+                };
+
+                if(!fs.existsSync(out)){
+
+                    out = utils.files.getRelativePath(out, options.minify);
+
+                    if(!fs.existsSync(out)){
+
+                        if(ext === ".js"){
+                            minify.js([file], options.minify).then(done);
+                        }else if(ext === ".css"){
+                            minify.css([file], options.minify).then(done);
+                        }
+
+                    }
+
+                }else{
+
+                    done();
+
                 }
 
             }
 
-        }
+        };
 
-        if(!fs.existsSync(out)){
-            grunt.fail.fatal("File not found {0}".format(out.replace(cwd, "")));
-        }
+        processFiles(files);
 
-        var data = fs.readFileSync(out, "utf8");
-
-        if(options.debug){
-
-            if(type === "css"){
-                source += "/* {1} */\n{0}\n".format(data, file);
-            }else if(type === "js"){
-                source += "// {1}\n{0}\n".format(data, file);
-            }
-
-        }else{
-            source += "\n" + data;
-        }
-
-    }
-
-    grunt.file.write(output, source);
-
-    var stat = fs.statSync(output);
-
-    grunt.log.ok("{0} : File created : {1} → {2}".format(
-        "compress.bundles".cyan,
-        output.replace(cwd, "").grey,
-        humanize.filesize(stat["size"]).green
-    ));
+    });
 
 };
 
@@ -210,16 +244,23 @@ module.exports = function(paths, bundleOpts, minifyOpts){
             "{0} {1}".format(comps.length, grunt.util.pluralize(comps, "matches/match"))
         ));
 
-        for(var i = 0; i < comps.length; i++){
+        comps.forEach(function(comp, index){
 
-            var groups = getGroups(comps[i].files);
+            var groups = getGroups(comp.files);
 
-            combine("css", "{0}.min.css".format(comps[i].target), groups.css, options);
-            combine("js", "{0}.min.js".format(comps[i].target), groups.js, options);
+            utils.promise()
+            .then(function(){ return combine("css", "{0}.min.css".format(comp.target), groups.css, options); })
+            .then(function(){ return combine("js", "{0}.min.js".format(comp.target), groups.js, options); })
+            .catch(function(err){console.log(err.stack)})
+            .then(function(){
 
-        }
+                if(index === comps.length - 1){
+                     resolve();
+                }
 
-        resolve();
+            });
+
+        });
 
     });
 

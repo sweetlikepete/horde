@@ -2,7 +2,7 @@
 
 /* ------------------------------------------------------------------------ */
 /*
-        tasks.clean
+        tasks.replace
 */
 /* ------------------------------------------------------------------------ */
 
@@ -24,24 +24,33 @@ var utils = require("./../utils/utils.js");
 /* ------------------------------------------------------------------------ */
 
 
-module.exports = function(paths){
+module.exports = {
 
-    return new Promise(function(resolve, reject){
-
-        files = utils.files.expand(paths);
+    regex : function(paths, regex, replacement){
 
         var grunt = require("grunt");
+        var fs = require("fs");
 
-        files.forEach(function(file){
+        var replacements = !(regex instanceof Array) ? [regex, replacement] : [regex];
 
-            grunt.file.delete(file);
+        for(var i = 0; i < paths.length; i++){
 
-            grunt.log.ok("{0} : Cleaned {1}".format("clean.files".cyan, file.grey));
+            var data = fs.readFileSync(paths[i], "utf8");
 
-        });
+            for(var j = 0; j < replacements.length; j++){
 
-        resolve();
+                if(data.match(replacements[j][0])){
 
-    });
+                    data = data.replace(replacements[j][0], replacements[j][1]);
 
-};
+                }
+
+            }
+
+            grunt.file.write(paths[i], data);
+
+        }
+
+    }
+
+ };

@@ -29,7 +29,7 @@ module.exports = function(paths, options){
     options = options || {};
 
     files = utils.files.expand(paths);
-    files = utils.files.filterExt(files, ".min.js");
+    files = utils.files.filterExt(files, [".min.js", "-min.js"]);
     files = utils.cache.filter(files, "minify", "js");
 
     return new Promise(function(resolve, reject){

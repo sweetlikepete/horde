@@ -83,6 +83,32 @@ module.exports = {
 
     },
 
+    rsync : function(source, destination, excludes){
+
+        var grunt = require("grunt");
+        var path = require("path");
+        var fs = require("fs");
+
+        if(!fs.existsSync(source)){
+            return;
+        }
+
+        grunt.file.mkdir(destination);
+
+        if(
+            excludes &&
+            excludes instanceof Array &&
+            excludes.length > 0
+        ){
+            excludes = " --exclude=" + excludes.join(" --exclude=");
+        }else{
+            excludes = "";
+        }
+
+        this.execSync("rsync -avz --ignore-times --checksum {2} {0} {1}".format(source, destination, excludes));
+
+    },
+
     extend : require("node.extend"),
 
     cache : require("./utils.cache.js"),

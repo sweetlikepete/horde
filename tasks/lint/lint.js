@@ -56,11 +56,11 @@ module.exports = {
             })
             .then(function(){
 
-                return less(files.less, utils.extend({
-                    less : {
+                return less(files.less, {
+                    less : utils.extend({
                         paths : folders
-                    }
-                }, options.less));
+                    }, options.less)
+                });
 
             })
             .catch(reject)

@@ -34,6 +34,10 @@ module.exports = {
 
     minify : require("./minify/minify.js"),
 
-    prompt : require("./tasks.prompt.js")
+    prompt : require("./tasks.prompt.js"),
+
+    replace : require("./tasks.replace.js"),
+
+    settings : require("./tasks.settings.js")
 
 };

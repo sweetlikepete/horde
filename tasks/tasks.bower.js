@@ -59,7 +59,7 @@ module.exports = {
 
                         if(files[index + 1]){
 
-                            processBowers(files, index + 1);
+                            process(files, index + 1);
 
                         }else{
 
