@@ -197,6 +197,10 @@ var combine = function(type, output, files, options){
                             minify.css([file], options.minify).then(done);
                         }
 
+                    }else{
+
+                        done();
+
                     }
 
                 }else{
