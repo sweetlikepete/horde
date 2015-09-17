@@ -62,8 +62,8 @@ module.exports = {
             var exec = require("child_process").execSync;
 
             // get the pids of any currently running gae local server
-            var localPorts = exec("lsof -P | grep {0} | awk '{print $2}'".format(args.port)).toString();
-            var adminPorts = exec("lsof -P | grep {0} | awk '{print $2}'".format(args.adminPort)).toString();
+            var localPorts = exec("lsof -P | grep 'TCP localhost:{0}' | awk '{print $2}'".format(args.port)).toString();
+            var adminPorts = exec("lsof -P | grep 'TCP localhost:{0}' | awk '{print $2}'".format(args.adminPort)).toString();
 
             var ports = [].concat(localPorts.split("\n"), adminPorts.split("\n"));
 
