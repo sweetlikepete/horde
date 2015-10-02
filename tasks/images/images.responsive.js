@@ -60,6 +60,7 @@ module.exports = function(paths, options){
         var compileMatches = function(files, callback){
 
             var targets = [];
+            var changed = [];
 
             var sizesFilter = function(value){
                 return value <= this;
@@ -87,8 +88,8 @@ module.exports = function(paths, options){
 
                 index = index || 0;
 
-                if(!matches.length){
-                    return callback(matches);
+                if(!matches || !matches.length){
+                    return callback([]);
                 }
 
                 if(matches[index]){
@@ -98,7 +99,7 @@ module.exports = function(paths, options){
                         if(matches[index + 1]){
                             processMatches(matches, index + 1);
                         }else{
-                            callback(matches);
+                            callback(changed);
                         }
 
                     };
@@ -125,6 +126,8 @@ module.exports = function(paths, options){
                     }).then(function(){
 
                         grunt.file.copy(target, previous);
+
+                        changed.push(matches[index]);
 
                         next();
 
