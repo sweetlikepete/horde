@@ -33,7 +33,7 @@ module.exports = {
 
         return new Promise(function(resolve, reject){
 
-            if(!files || files.length === 0){
+            if(!files || !files.length){
                 return resolve();
             }
 

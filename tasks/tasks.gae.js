@@ -24,12 +24,6 @@ var utils = require("./../utils/utils.js");
 /* ------------------------------------------------------------------------ */
 
 
-var cleanCert = function(){
-
-    utils.execSync("rm -rf /Applications/GoogleAppEngineLauncher.app/Contents/Resources/GoogleAppEngine-default.bundle/Contents/Resources/google_appengine/lib/cacerts/cacerts.txt");
-
-};
-
 var interval = null;
 
 
@@ -41,6 +35,14 @@ var interval = null;
 
 
 module.exports = {
+
+
+    /* -------------------------------------------------------------------- */
+    /*
+            functions
+    */
+    /* -------------------------------------------------------------------- */
+
 
     start : function(args){
 
@@ -80,8 +82,6 @@ module.exports = {
                 utils.execSync("kill -9 {0}".format(ports.join(" ")));
             }
 
-            cleanCert();
-
             // run the server
             utils.execSync([
                 "dev_appserver.py",
@@ -100,8 +100,6 @@ module.exports = {
     update : function(args){
 
         return new Promise(function(resolve, reject){
-
-            cleanCert();
 
             // deploy the application
             utils.execSync([

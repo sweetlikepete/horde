@@ -16,8 +16,6 @@
 
 module.exports = {
 
-    cache : require("./utils.cache.js"),
-
     shorten : function(path){
 
         return path.replace(process.cwd() + "/", "");
