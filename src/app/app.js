@@ -2,7 +2,7 @@
 
 /* ------------------------------------------------------------------------ */
 /*
-        horde
+        app
 */
 /* ------------------------------------------------------------------------ */
 
@@ -16,10 +16,6 @@
 
 module.exports = {
 
-    app : require("./src/app/app.js"),
-
-    task : require("./src/task/task.js"),
-
-    util : require("./src/util/util.js")
+    gae : require("./gae/gae.js")
 
 };

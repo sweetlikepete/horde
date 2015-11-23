@@ -19,6 +19,10 @@ Some image related tasks require graphicsmagick be installed on your machine. On
 
 ## Tests
 
+  ```npm install```
+
+  ```make test```
+
   ```npm test```
 
 ## Contributing

@@ -1,0 +1,21 @@
+{
+    "adjoining-classes" : false,
+    "box-model" : false,
+    "empty-rules" : false,
+    "compatible-vendor-prefixes" : false,
+    "display-property-grouping" : true,
+    "duplicate-background-images" : false,
+    "duplicate-properties" : true,
+    "fallback-colors" : false,
+    "gradients" : false,
+    "box-sizing" : false,
+    "ids" : false,
+    "important" : false,
+    "known-properties" : true,
+    "outline-none" : false,
+    "overqualified-elements" : false,
+    "qualified-headings" : false,
+    "universal-selector" : false,
+    "zero-units" : true,
+    "unique-headings" : false
+}
