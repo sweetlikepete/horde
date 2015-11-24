@@ -56,6 +56,16 @@ module.exports = {
 
     },
 
+    warn : function(){
+
+        if(enabled){
+
+            grunt.log.warn.apply(this, arguments);
+
+        }
+
+    },
+
     error : function(err){
 
         if(enabled){

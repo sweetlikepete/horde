@@ -75,6 +75,10 @@ module.exports = {
             args.adminPort = args.port + 1;
         }
 
+        if(!args.apiPort){
+            args.apiPort = args.adminPort + 1;
+        }
+
         var exec = require("child_process").execSync;
 
         // get the pids of any currently running gae local server
@@ -99,7 +103,9 @@ module.exports = {
         var proc = child.spawn("dev_appserver.py", [
             "--port={0}".format(args.port),
             "--admin_port={0}".format(args.adminPort),
+            "--api_port={0}".format(args.apiPort),
             "--enable_sendmail=yes",
+            "--skip_sdk_update_check=yes",
             args.path
         ]);
 
@@ -110,7 +116,7 @@ module.exports = {
 
     },
 
-    update : function(args){
+    deploy : function(args){
 
         return new Promise(function(resolve, reject){
 
@@ -121,7 +127,6 @@ module.exports = {
                 args.path
             ]);
 
-            proc.stdout.on("data", output);
             proc.stderr.on("data", output);
 
             proc.stderr.on("close", function(code){

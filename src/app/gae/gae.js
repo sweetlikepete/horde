@@ -206,7 +206,7 @@ module.exports = function(grunt, horde, config){
 
         horde.util.promise()
         .then(build)
-        .then(function(){ return horde.task.gae.update({ path : config.source }); })
+        .then(function(){ return horde.task.gae.deploy({ path : config.source }); })
         .then(function(){
 
             return complete("Deploy complete");
