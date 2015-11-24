@@ -77,7 +77,7 @@ module.exports = {
 
                 var done = function(){
 
-                    if(index !== procs.length){
+                    if(index < procs.length - 1){
 
                         next(index += 1);
 
