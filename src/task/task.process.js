@@ -79,6 +79,10 @@ module.exports = {
 
                     if(index !== procs.length){
 
+                        next(index += 1);
+
+                    }else{
+
                         if(!errors.length){
 
                             resolve();
@@ -88,10 +92,6 @@ module.exports = {
                             reject(errors);
 
                         }
-
-                    }else{
-
-                        next(index += 1);
 
                     }
 

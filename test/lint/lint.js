@@ -30,26 +30,3 @@ horde.task.process.folders({
     horde.util.log.error("Some lint errors were found".red);
 
 });
-
-// horde.task.lint.all([
-//     "src",
-//     "test/{lint,tests}",
-//     "index.js"
-// ]).then(function(){
-//
-//     horde.util.log.raw("");
-//     horde.util.log.ok("All files lint free".green);
-//
-// }, function(errors){
-//
-//     horde.util.log.raw("");
-//
-//     errors.forEach(function(error){
-//         error.forEach(function(line){
-//             console.log(line);
-//         });
-//     });
-//
-//     horde.util.log.error("Some lint errors were found".red);
-//
-// });
