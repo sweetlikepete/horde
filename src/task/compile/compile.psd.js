@@ -169,7 +169,7 @@ var processors = {
 
                                     index = index || 0;
 
-                                    gm(temp).setFormat(ext).rotate("white", rotate).thumb(
+                                    gm(temp).gravity("Center").setFormat(ext).rotate("white", rotate).thumb(
                                         outputs.sizes[index][0],
                                         outputs.sizes[index][1],
                                         outputs.paths[index],
