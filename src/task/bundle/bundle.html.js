@@ -95,7 +95,7 @@ var getBundles = function(file){
 
         for(var i = 0; i < tags.length; i++){
 
-            var tagPartsRE = /{%[ \t]*bundle[^\}][ \t]*['"]([\s\S]*?)['"][ \t]*?%}([\s\S]*?){%[ \t]*endbundle[ \t]*%}/g;
+            var tagPartsRE = /{%[ \t]*bundle[^\}][ \t]*[\'\"]([\s\S]*?)[\'\"][ \t]*?%}([\s\S]*?){%[ \t]*endbundle[ \t]*%}/g;
             var includesRE = /<(script|link).*?(href|src)=['"](.*?)['"].*?>/g;
             var tagParts = tagPartsRE.exec(tags[i]);
             var includes = tagParts[2].match(includesRE) || [];

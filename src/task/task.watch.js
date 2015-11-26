@@ -76,19 +76,19 @@ module.exports = {
             var allResets = [];
             var watcher;
 
-            folder.resets = folder.resets || [];
+            config.resets = config.resets || [];
 
-            for(var reset in folder.resets){
-                allResets = allResets.concat(folder.resets[reset]);
+            for(var reset in config.resets){
+                allResets = allResets.concat(config.resets[reset]);
             }
 
             var build = function(file, add){
 
                 if(!add && allResets.indexOf(file) > -1){
 
-                    for(var res in folder.resets){
+                    for(var res in config.resets){
 
-                        if(folder.resets[res].indexOf(file) > -1){
+                        if(config.resets[res].indexOf(file) > -1){
 
                             util.log.ok("{0} : {1}".format(
                                 "watch.reset".cyan,

@@ -44,18 +44,18 @@ module.exports = function(grunt, horde, config){
             folders : {
                 "<% source %>/static" : {
                     ignore : "<% source %>/static/lib",
-                    dest : "static",
-                    resets : {
-                        less : [
-                            "<% source %>/static/App.less",
-                            "<% source %>/static/App.mixins.less",
-                            "<% source %>/static/App.variables.less"
-                        ]
-                    }
+                    dest : "static"
                 },
-                "<% source %>/template/page" : {
+                "<% source %>/template" : {
                     dest : "page"
                 }
+            },
+            resets : {
+                scss : [
+                    "<% source %>/static/App/App.scss",
+                    "<% source %>/static/App/App.mixins.scss",
+                    "<% source %>/static/App/App.variables.scss"
+                ]
             }
         }
     };
