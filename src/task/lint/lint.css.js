@@ -90,13 +90,17 @@ var linter = function(file, options){
 
         options.filename = path.join(process.cwd(), file);
 
+        var data = fs.readFileSync(file, "utf8");
+
+        if(data.match(/\/\*[ \t]*SKIP LINT[ \t]*\*\//g)){
+            return resolve();
+        }
+
         switch(ext){
 
             case "less" :
 
                 var less = require("less");
-
-                var data = fs.readFileSync(file, "utf8");
 
                 less.render(data, options.less, function(error, response){
 

@@ -100,7 +100,9 @@ module.exports = {
                 util.promise()
                 .then(function(){
 
-                    return processors[processor].file(file, file.options[processor]);
+                    var opts = util.extend(file.options.all, file.options[processor]);
+
+                    return processors[processor].file(file, opts);
 
                 })
                 .then(

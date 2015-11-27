@@ -41,6 +41,13 @@ module.exports = function(grunt, horde, config){
         },
         process : {
             build : "<% build %>",
+            options : {
+                all : {
+                    scss : {
+                        includePaths : ["<% source %>"]
+                    }
+                }
+            },
             folders : {
                 "<% source %>/static" : {
                     ignore : "<% source %>/static/lib",
@@ -49,13 +56,6 @@ module.exports = function(grunt, horde, config){
                 "<% source %>/template" : {
                     dest : "page"
                 }
-            },
-            resets : {
-                scss : [
-                    "<% source %>/static/App/App.scss",
-                    "<% source %>/static/App/App.mixins.scss",
-                    "<% source %>/static/App/App.variables.scss"
-                ]
             }
         }
     };

@@ -46,8 +46,8 @@ module.exports = {
 
     file : function(file, options){
 
-        var grunt = require("grunt");
         var sass = require("node-sass");
+        var grunt = require("grunt");
 
         options = util.extend({}, options);
 
