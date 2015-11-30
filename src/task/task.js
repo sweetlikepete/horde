@@ -32,6 +32,8 @@ module.exports = {
 
     minify : require("./minify/minify.js"),
 
+    modernizr : require("./task.modernizr.js"), 
+
     open : require("./task.open.js"),
 
     process : require("./task.process.js"),

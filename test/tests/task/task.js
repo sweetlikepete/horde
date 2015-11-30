@@ -42,6 +42,7 @@ describe("horde.task", function(){
         "gae",
         "lint",
         "minify",
+        "modernizr",
         "open",
         "prompt",
         "replace",

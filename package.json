@@ -38,6 +38,7 @@
     "jshint": "2.8.0",
     "jsonfile": "2.2.1",
     "less": "2.5.1",
+    "modernizr": "3.2.0",
     "node.extend": "1.1.5",
     "node-sass": "3.4.2",
     "picture-tube": "1.0.0",

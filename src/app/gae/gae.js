@@ -32,6 +32,10 @@ module.exports = function(grunt, horde, config){
             file : "<% source %>/bower.json",
             dest : "static/lib/bower"
         },
+        modernizr : {
+            file : "<% source %>/modernizr.json",
+            dest : "<% source %>/static/lib/modernizr"
+        },
         production : {
             url : "http://www.appengine.com"
         },
@@ -78,6 +82,11 @@ module.exports = function(grunt, horde, config){
             .then(function(){
 
                 return horde.task.bower.install(config.bower.file, config.bower.dest);
+
+            })
+            .then(function(){
+
+                return horde.task.modernizr.install(config.modernizr.file, config.modernizr.dest);
 
             })
             .then(function(){

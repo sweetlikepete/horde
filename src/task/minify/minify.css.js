@@ -71,7 +71,7 @@ module.exports = {
 
             var code = cssmin(grunt.file.read(input));
 
-            util.process.write(input, output, code, "css", "minify", resolve);
+            util.process.write(file.path, output, code, "css", "minify", resolve);
 
         });
 

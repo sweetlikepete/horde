@@ -2,7 +2,7 @@
 
 /* ------------------------------------------------------------------------ */
 /*
-        horde.task.bower
+        horde.task.modernizr
 */
 /* ------------------------------------------------------------------------ */
 
@@ -36,11 +36,11 @@ var processPaths = function(paths, destination){
 
         var isDir = fs.lstatSync(p).isDirectory();
 
-        paths[i] = isDir ? path.join(paths[i], "bower.json") : paths[i];
+        paths[i] = isDir ? path.join(paths[i], "modernizr.json") : paths[i];
 
         var ex = path.join(path.dirname(paths[i]), destination);
 
-        excludes.push("!{0}/**/bower.json".format(ex));
+        excludes.push("!{0}/**/modernizr.json".format(ex));
 
     });
 
@@ -71,7 +71,7 @@ module.exports = {
         paths = processPaths(paths, destination);
 
         files = util.file.expand(paths);
-        files = util.cache.filter(files, "bower", "json");
+        files = util.cache.filter(files, "modernizr", "json");
 
         return new Promise(function(resolve, reject){
 
@@ -79,12 +79,13 @@ module.exports = {
                 return resolve([]);
             }
 
+            var modernizr = require("modernizr");
             var grunt = require("grunt");
             var bower = require("bower");
             var path = require("path");
 
             var log = function(result){
-                util.log.writeln(["bower.json", result.id.cyan, result.message].join(" "));
+                util.log.writeln(["modernizr", result.id.cyan, result.message].join(" "));
             };
 
             var error = function(error){
@@ -109,7 +110,7 @@ module.exports = {
 
                         }else{
 
-                            util.cache.set(files, "bower", "json");
+                            util.cache.set(files, "modernizr", "json");
 
                             resolve(files);
 
@@ -118,23 +119,26 @@ module.exports = {
                     };
 
                     util.log.ok("{0} : install : {1}".format(
-                        "bower.json".cyan,
+                        "modernizr.json".cyan,
                         util.path.shorten(files[index]).grey
                     ));
 
-                    bower.commands.install(
-                        [],
-                        {
-                            save : true
-                        },
-                        {
-                            cwd : path.dirname(files[index]),
-                            directory : destination
-                        }
-                    )
-                    .on("log", log)
-                    .on("error", error)
-                    .on("end", next);
+                    var config = grunt.file.readJSON(files[index]);
+
+                    modernizr.build(config, function(result){
+
+                        var output = path.join(destination, "modernizr.js");
+
+                        util.log.ok("{0} : write : {1}".format(
+                            "modernizr.json".cyan,
+                            util.path.shorten(output).grey
+                        ));
+
+                        grunt.file.write(output, result);
+
+                        next();
+
+                    });
 
                 }
 
