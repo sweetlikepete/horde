@@ -42,6 +42,8 @@ module.exports = {
 
         css : require("./lint.css.js"),
 
+        es : require("./lint.js.js"),
+
         js : require("./lint.js.js")
 
     },
@@ -62,4 +64,3 @@ module.exports = {
 
 
 };
-

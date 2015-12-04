@@ -36,11 +36,13 @@ module.exports = {
 
     exts : {
 
+        es : require("./compile.es.js"),
+
         less : require("./compile.less.js"),
 
-        scss : require("./compile.scss.js"),
+        psd : require("./compile.psd.js"),
 
-        psd : require("./compile.psd.js")
+        scss : require("./compile.scss.js")
 
     },
 

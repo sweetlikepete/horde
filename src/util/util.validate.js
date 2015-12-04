@@ -49,39 +49,49 @@ module.exports = {
 
             errors.forEach(function(error){
 
-                var line = error.line;
-                var lines = error.code.split("\n");
-
-                var prints = {
-                    line : lines[line - 1],
-                    post : [
-                        (lines[line] ? lines[line] : ""),
-                        (lines[line + 1] ? lines[line + 1] : "")
-                    ],
-                    pre : [
-                        (lines[line - 3] ? lines[line - 3] : ""),
-                        (lines[line - 2] ? lines[line - 2] : "")
-                    ]
-                };
-
                 var data = [];
 
-                prints.pre.forEach(function(text, index){
+                if(error.code !== ""){
 
-                    var li = line - (prints.pre.length - index);
+                    var line = error.line || 1;
+                    var lines = error.code.split("\n");
 
-                    if(li >= 0){
-                        data.push(["{0} | ".format(li)["grey"], " {0}".format(text).white]);
-                    }
+                    error.character = error.character || 1;
 
-                });
+                    var prints = {
+                        line : lines[line - 1],
+                        post : [
+                            (lines[line] ? lines[line] : ""),
+                            (lines[line + 1] ? lines[line + 1] : "")
+                        ],
+                        pre : [
+                            (lines[line - 3] ? lines[line - 3] : ""),
+                            (lines[line - 2] ? lines[line - 2] : "")
+                        ]
+                    };
 
-                data.push(["{0} | ".format(line).grey, " {0}".format(lines[line - 1].red)]);
-                data.push(["---------"["grey"], (new Array(error.character - 1).join("-") + "^")["grey"]]);
+                    prints.pre.forEach(function(text, index){
 
-                prints.post.forEach(function(text, index){
-                    data.push(["{0} | ".format(line + (index + 1))["grey"], " {0}".format(text)["white"]]);
-                });
+                        var li = line - (prints.pre.length - index);
+
+                        if(li >= 0){
+                            data.push(["{0} | ".format(li)["grey"], " {0}".format(text).white]);
+                        }
+
+                    });
+
+                    var lineText = lines[line - 1];
+                    lineText = lineText !== "" ? lineText.red : lineText;
+
+                    data.push(["{0} | ".format(line).grey, " {0}".format(lineText)]);
+
+                    data.push(["---------"["grey"], (new Array((error.character) - 1).join("-") + "^")["grey"]]);
+
+                    prints.post.forEach(function(text, index){
+                        data.push(["{0} | ".format(line + (index + 1))["grey"], " {0}".format(text)["white"]]);
+                    });
+
+                }
 
                 message = "";
                 message += "\n" + error.reason["white"].bold + " " + error.file.green + " :";
@@ -90,7 +100,10 @@ module.exports = {
                     message += "\n" + error.description["grey"];
                 }
 
-                message += "\n" + table(data, { align : ["r", "l"], hsep : "" });
+                if(data.length){
+                    message += "\n" + table(data, { align : ["r", "l"], hsep : "" });
+                }
+
                 message += "\n";
 
                 messages.push(message);

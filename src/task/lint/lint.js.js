@@ -34,7 +34,7 @@ var linters = {
         var fs = require("fs");
 
         var task = "lint.jscs";
-        var ext = "js";
+        var ext = path.extname(file).replace(/\./g, "").toLowerCase();
 
         options = util.extend({}, options);
         options.config = options.config || path.join(__dirname, "config/jscs.json");
@@ -104,13 +104,17 @@ var linters = {
         var fs = require("fs");
 
         var task = "lint.jshint";
-        var ext = "js";
+        var ext = path.extname(file).replace(/\./g, "").toLowerCase();
 
         options = util.extend({}, options);
         options.config = options.config || path.join(__dirname, "config/jshint.json");
         options.config = JSON.parse(fs.readFileSync(options.config, "utf8"));
         options.rules = options.lint || {};
         options.rules = util.extend(options.config, options.rules);
+
+        if(ext === "es"){
+            options.rules["esnext"] = true;
+        }
 
         return new Promise(function(resolve, reject){
 

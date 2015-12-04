@@ -57,6 +57,7 @@ module.exports = {
         var uglify = require("uglify-js");
 
         var input = compile.output(file);
+
         var output = this.output(file);
 
         return new Promise(function(resolve, reject){
@@ -68,7 +69,7 @@ module.exports = {
                 return resolve();
             }
 
-            var code = uglify.minify(file.path).code;
+            var code = uglify.minify(input).code;
 
             util.process.write(file.path, output, code, "js", "minify", resolve);
 
