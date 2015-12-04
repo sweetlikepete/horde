@@ -2,7 +2,7 @@
 
 /* ------------------------------------------------------------------------ */
 /*
-        horde.task.compile.es
+        horde.task.compile.coffee
 */
 /* ------------------------------------------------------------------------ */
 
@@ -38,7 +38,7 @@ module.exports = {
 
         var path = require("path");
 
-        var output = path.relative(file.cwd, file.path.replace(/(.*?).es$/g, "$1.js"));
+        var output = path.relative(file.cwd, file.path.replace(/(.*?).coffee$/g, "$1.js"));
 
         return path.join(file.build, "compilations", file.dest, output);
 
@@ -46,7 +46,6 @@ module.exports = {
 
     file : function(file, options){
 
-        var babel = require("babel-core");
         var grunt = require("grunt");
         var path = require("path");
 
@@ -55,7 +54,7 @@ module.exports = {
         var output = this.output(file, options);
 
         var task = "compile";
-        var ext = "es";
+        var ext = "coffee";
 
         return new Promise(function(resolve, reject){
 
@@ -63,20 +62,28 @@ module.exports = {
                 return resolve(output);
             }
 
-            var res = babel.transformFileSync(file.path, {
-                sourceFileName : path.relative(path.dirname(output), file.path),
-                sourceMapTarget : path.basename(output),
-                sourceMap: true,
-                presets : [
-                    require.resolve("babel-preset-es2015")
-                ]
-            });
+            var res = null;
+
+            try{
+
+                res = require('coffee-script').compile(grunt.file.read(file.path), {
+                    filename : file.path,
+                    sourceMap : true
+                });
+
+            }catch(err){
+
+                reject(err);
+
+                return;
+
+            }
 
             var sourceMappingURL = "\n//# sourceMappingURL=" + path.basename(output) + ".map"
 
-            grunt.file.write(output + ".map", JSON.stringify(res.map));
+            grunt.file.write(output + ".map", JSON.stringify(res.v3SourceMap));
 
-            util.process.write(file.path, output, res.code + sourceMappingURL + "\n", ext, task, resolve);
+            util.process.write(file.path, output, res.js + sourceMappingURL + "\n", ext, task, resolve);
 
         });
 

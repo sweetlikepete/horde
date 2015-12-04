@@ -64,14 +64,14 @@ module.exports = {
 
             if(
                 input === output ||
-                util.cache.cached(file.path, "js", "minify")
+                util.cache.cached(file.path, file.ext, "minify")
             ){
                 return resolve();
             }
 
             var code = uglify.minify(input).code;
 
-            util.process.write(file.path, output, code, "js", "minify", resolve);
+            util.process.write(file.path, output, code, file.ext, "minify", resolve);
 
         });
 

@@ -64,14 +64,14 @@ module.exports = {
 
             if(
                 input === output ||
-                util.cache.cached(file.path, "css", "minify")
+                util.cache.cached(file.path, file.ext, "minify")
             ){
                 return resolve();
             }
 
             var code = cssmin(grunt.file.read(input));
 
-            util.process.write(file.path, output, code, "css", "minify", resolve);
+            util.process.write(file.path, output, code, file.ext, "minify", resolve);
 
         });
 

@@ -25,6 +25,7 @@
     "babel-plugin-transform-es2015-arrow-functions" : "6.1.18",
     "bower": "1.5.2",
     "chokidar": "1.2.0",
+    "coffee-script": "1.10.0",
     "csslint": "0.10.0",
     "cssmin": "0.4.3",
     "dateformat": "1.0.11",
