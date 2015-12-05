@@ -64,21 +64,11 @@ module.exports = {
 
             var opts = JSON.parse(JSON.stringify(options.scss || {}));
 
-            opts.file = file.path;
+            opts.data = grunt.file.read(file.path);
 
-            sass.render(opts, function(error, response){
+            var response = sass.renderSync(opts);
 
-                if(error){
-
-                    reject(error);
-
-                }else{
-
-                    util.process.write(file.path, output, response.css, ext, task, resolve);
-
-                }
-
-            });
+            util.process.write(file.path, output, response.css, ext, task, resolve);
 
         });
 

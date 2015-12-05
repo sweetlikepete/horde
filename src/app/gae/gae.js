@@ -57,8 +57,11 @@ module.exports = function(grunt, horde, config){
                     ignore : "<% source %>/static/lib",
                     dest : "static"
                 },
-                "<% source %>/template" : {
+                "<% source %>/template/page" : {
                     dest : "page"
+                },
+                "<% source %>/template/extension" : {
+                    dest : "extension"
                 }
             }
         }
@@ -239,9 +242,9 @@ module.exports = function(grunt, horde, config){
         .then(build)
         .then(function(){
 
-            horde.task.gae.start({ path : config.source, port : config.local.port });
             horde.task.open.url("{0}:{1}".format(config.local.url, config.local.port), true);
             horde.task.watch.folders(config.process);
+            horde.task.gae.start({ path : config.source, port : config.local.port });
 
         })
         .catch(horde.util.log.error);

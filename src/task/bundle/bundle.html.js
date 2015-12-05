@@ -204,12 +204,12 @@ var generateBundles = function(file, options){
         util.promise()
         .then(function(){
 
-            return process("css", resolve, reject);
+            return process("css");
 
         })
         .then(function(){
 
-            return process("js", resolve, reject);
+            return process("js");
 
         })
         .then(resolve, reject);

@@ -87,6 +87,11 @@ module.exports = {
 
             }else{
 
+                util.log.ok("{0} : read : {1}".format(
+                    "{0}.{1}".format(config.ext, config.task).cyan,
+                    util.path.shorten(file.path).grey
+                ));
+
                 var stat1 = fs.statSync(file.path);
 
                 var use = null;
