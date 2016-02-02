@@ -384,7 +384,7 @@ var processors = {
 
                     }).then(function(){
 
-                        gm(temp).setFormat(outputExt).write(output, function(error){
+                        gm(temp).setFormat(outputExt).quality(90).write(output, function(error){
 
                             if(error){
 

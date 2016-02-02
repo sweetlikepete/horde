@@ -144,8 +144,6 @@ var linter = function(file, options){
 
             case "css" :
 
-                var data = fs.readFileSync(file, "utf8");
-
                 validate(data, file, task, ext, options, resolve, reject);
 
             break;
