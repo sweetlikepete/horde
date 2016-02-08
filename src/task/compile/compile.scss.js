@@ -66,9 +66,13 @@ module.exports = {
 
             opts.data = grunt.file.read(file.path);
 
-            var response = sass.renderSync(opts);
+            var render = "";
 
-            util.process.write(file.path, output, response.css, ext, task, resolve);
+            if(opts.data.trim() !== ""){
+                var render = sass.renderSync(opts).css;
+            }
+
+            util.process.write(file.path, output, render, ext, task, resolve);
 
         });
 

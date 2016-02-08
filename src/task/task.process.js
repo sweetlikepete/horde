@@ -101,7 +101,7 @@ module.exports = {
                 .then(function(){
 
                     var opts = util.extend(file.options.all, file.options[processor]);
-
+                    
                     return processors[processor].file(file, opts);
 
                 })
@@ -159,9 +159,9 @@ module.exports = {
 
             var next = function(index){
 
-                if(index !== calls.length){
+                index = index || 0;
 
-                    index = index || 0;
+                if(index !== calls.length){
 
                     self.file.apply(self, calls[index]).then(function(){
 

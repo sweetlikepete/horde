@@ -46,6 +46,8 @@ module.exports = {
 
         if(wait){
 
+            var attempts = 0;
+
             var attempt = function(){
 
                 var request = require("request");
@@ -58,7 +60,13 @@ module.exports = {
 
                     }else{
 
-                        setTimeout(attempt, 500);
+                        attempts++;
+
+                        var time = 500 * Math.pow(2, attempts);
+
+                        util.log.ok("{0} : {1}".format("open.url".cyan, "trying again in {0} seconds".format(time / 1000).grey));
+
+                        setTimeout(attempt, time);
 
                     }
 
