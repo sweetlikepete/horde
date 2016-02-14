@@ -157,7 +157,9 @@ var processors = {
 
                             grunt.file.mkdir(path.dirname(temp));
 
-                            return psd.image.saveAsPng(temp);
+                            util.execSync("convert {0}[0] {1}".format(file.path, temp));
+
+                            // return psd.image.saveAsPng(temp);
 
                         }).then(function(){
 
@@ -296,7 +298,9 @@ var processors = {
 
                         grunt.file.mkdir(path.dirname(temp));
 
-                        return psd.image.saveAsPng(temp);
+                        util.execSync("convert {0}[0] {1}".format(file.path, temp));
+
+                        // return psd.image.saveAsPng(temp);
 
                     }).then(function(){
 
@@ -380,7 +384,9 @@ var processors = {
 
                         grunt.file.mkdir(path.dirname(temp));
 
-                        return psd.image.saveAsPng(temp);
+                        util.execSync("convert {0}[0] {1}".format(file.path, temp));
+
+                        // return psd.image.saveAsPng(temp);
 
                     }).then(function(){
 

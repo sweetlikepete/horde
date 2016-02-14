@@ -69,7 +69,17 @@ module.exports = {
             var render = "";
 
             if(opts.data.trim() !== ""){
-                var render = sass.renderSync(opts).css;
+
+                try{
+
+                    var render = sass.renderSync(opts).css;
+
+                }catch(e){
+
+                    reject(e);
+
+                }
+
             }
 
             util.process.write(file.path, output, render, ext, task, resolve);

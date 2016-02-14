@@ -57,11 +57,11 @@ module.exports = function(grunt, horde, config){
                     ignore : "<% source %>/static/lib",
                     dest : "static"
                 },
-                "<% source %>/template/page" : {
-                    dest : "page"
+                "<% source %>/templates/pages" : {
+                    dest : "pages"
                 },
-                "<% source %>/template/extension" : {
-                    dest : "extension"
+                "<% source %>/templates/extensions" : {
+                    dest : "extensions"
                 }
             }
         }
