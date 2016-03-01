@@ -214,6 +214,20 @@ module.exports = function(grunt, horde, config){
 
     });
 
+    grunt.registerTask("update", "Update the GAE components of the application", function(){
+
+        horde.util.promise()
+        .then(function(){ return horde.task.gae.update(); })
+        .then(function(){
+
+            return complete("Update complete");
+
+        })
+        .catch(horde.util.log.error)
+        .then(this.async());
+
+    });
+
     grunt.registerTask("deploy", "Deploy the application", function(){
 
         horde.util.promise()

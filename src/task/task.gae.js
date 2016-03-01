@@ -116,6 +116,33 @@ module.exports = {
 
     },
 
+    update : function(){
+
+        return new Promise(function(resolve, reject){
+
+            var child = require("child_process");
+
+            var proc = child.spawn("gcloud", [
+                "components",
+                "update"
+            ]);
+
+            proc.stderr.on("data", output);
+
+            proc.stderr.on("close", function(code){
+
+                if(code instanceof Error){
+                    reject(code);
+                }else{
+                    resolve();
+                }
+
+            });
+
+        });
+
+    },
+
     deploy : function(args){
 
         return new Promise(function(resolve, reject){
