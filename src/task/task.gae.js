@@ -79,27 +79,6 @@ module.exports = {
             args.apiPort = args.adminPort + 1;
         }
 
-        var exec = require("child_process").execSync;
-
-        // get the pids of any currently running gae local server
-        var localPorts = exec("lsof -P | grep 'TCP localhost:{0}' | awk '{print $2}'".format(args.port)).toString();
-        var adminPorts = exec("lsof -P | grep 'TCP localhost:{0}' | awk '{print $2}'".format(args.adminPort)).toString();
-
-        var ports = [].concat(localPorts.split("\n"), adminPorts.split("\n"));
-
-        ports = ports.filter(function(n){
-            return n !== "";
-        });
-
-        ports = ports.filter(function(n, pos){
-            return ports.indexOf(n) === pos;
-        });
-
-        // kill them all
-        if(ports.length){
-            util.execSync("kill -9 {0}".format(ports.join(" ")));
-        }
-
         var proc = child.spawn("dev_appserver.py", [
             "--port={0}".format(args.port),
             "--admin_port={0}".format(args.adminPort),
