@@ -101,7 +101,7 @@ var getBundles = function(file){
             var includes = tagParts[2].match(includesRE) || [];
 
             var compression = {
-                target : tagParts[1].toLowerCase(),
+                target : tagParts[1],
                 files : []
             };
 
