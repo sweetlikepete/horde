@@ -34,7 +34,7 @@ module.exports = function(paths){
 
         files.forEach(function(file){
 
-            grunt.file.delete(file,
+            grunt.file.delete(file, {
                 force: true
             });
 
