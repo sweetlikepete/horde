@@ -231,6 +231,7 @@ module.exports = function(grunt, horde, config){
     grunt.registerTask("deploy", "Deploy the application", function(){
 
         horde.util.promise()
+        .then(clean)
         .then(build)
         .then(function(){ return horde.task.gae.deploy({ path : config.source }); })
         .then(function(){
