@@ -46,6 +46,7 @@
     "modernizr": "3.2.0",
     "node.extend": "1.1.5",
     "node-sass": "3.4.2",
+    "osx-notifier": "0.2.2",
     "picture-tube": "1.0.0",
     "psd": "3.1.0",
     "rimraf": "2.4.3",

@@ -118,6 +118,10 @@ module.exports = {
                         cwd : folder.cwd,
                         folder : folder,
                         path : file
+                    }).then(undefined, function(){
+
+                        util.execSync("tput bel");
+
                     });
 
                 }

@@ -56,8 +56,8 @@ var resolveBundlePaths = function(compression, file){
                     build : file.build,
                     dest : folder.dest,
                     folders : folders,
-                    cwd : folder.cwd,
                     folder : folder,
+                    cwd : index,
                     path : p
                 });
 

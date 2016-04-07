@@ -68,12 +68,13 @@ module.exports = {
                 procs = [procs];
             }
 
+            var errors = [];
+
             var next = function(index){
 
                 index = index || 0;
 
                 var processor = procs[index];
-                var errors = [];
 
                 var done = function(){
 
@@ -101,7 +102,7 @@ module.exports = {
                 .then(function(){
 
                     var opts = util.extend(file.options.all, file.options[processor]);
-                    
+
                     return processors[processor].file(file, opts);
 
                 })
