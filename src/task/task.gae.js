@@ -127,11 +127,25 @@ module.exports = {
         return new Promise(function(resolve, reject){
 
             var child = require("child_process");
+            var proc;
 
-            var proc = child.spawn("appcfg.py", [
-                "update",
-                args.path
-            ]);
+            if(args.id){
+
+                var proc = child.spawn("appcfg.py", [
+                    "-A",
+                    args.id,
+                    "update",
+                    args.path
+                ]);
+
+            }else{
+
+                var proc = child.spawn("appcfg.py", [
+                    "update",
+                    args.path
+                ]);
+
+            }
 
             proc.stderr.on("data", output);
 
