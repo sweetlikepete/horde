@@ -92,11 +92,7 @@ module.exports = {
             folder.cwd = index;
             folder.options = JSON.parse(JSON.stringify(extend(config.options, folder.options)));
 
-            var ignore = folder.ignore || [];
-
-            if(typeof ignore === "string"){
-                ignore = [ignore];
-            }
+            var ignore = typeof ignore === "string" ? [ignore] : (folder.ignore ? folder.ignore.slice(0) : []);
 
             for(var i = 0; i < ignore.length; i++){
                 ignore[i] = "! " + ignore[i] + "/**";
