@@ -54,7 +54,10 @@ module.exports = function(grunt, horde, config){
             },
             folders : {
                 "<% source %>/static" : {
-                    ignore : "<% source %>/static/lib",
+                    ignore : [
+                        "<% source %>/static/lib",
+                        "<% source %>/static/symlinks"
+                    ],
                     dest : "static"
                 },
                 "<% source %>/templates/pages" : {

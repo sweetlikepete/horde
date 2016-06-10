@@ -161,6 +161,39 @@ module.exports = {
 
         });
 
+    },
+
+    rollback : function(args){
+
+        return new Promise(function(resolve, reject){
+
+            var child = require("child_process");
+
+            var arguments = [
+                "-A",
+                args.id,
+                "rollback",
+                args.path
+            ];
+
+            output("running `appcfg.py {0}`".format(arguments.join(" ")));
+
+            var proc = child.spawn("appcfg.py", arguments);
+
+            proc.stderr.on("data", output);
+
+            proc.stderr.on("close", function(code){
+
+                if(code instanceof Error){
+                    reject(code);
+                }else{
+                    resolve();
+                }
+
+            });
+
+        });
+
     }
 
 };
