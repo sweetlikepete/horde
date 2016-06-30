@@ -181,6 +181,10 @@ var generateBundles = function(file, options){
 
                 var output = path.join(file.build, "bundles", "{0}.min.{1}".format(bundle.target, type));
 
+                if(file.building && grunt.file.exists(output)){
+                    grunt.fail.fatal("Duplicate bundle detected in {0}".format(file.path));
+                }
+
                 grunt.file.write(output, source);
 
                 var stat = fs.statSync(output);
@@ -225,6 +229,7 @@ var generateBundles = function(file, options){
 */
 /* ------------------------------------------------------------------------ */
 
+var outputs = {};
 
 module.exports = {
 
@@ -237,6 +242,29 @@ module.exports = {
 
 
     file : function(file, options){
+
+        // if the file is being processed as part of a build
+        // pre-clean the output directories so that duplicate
+        // outputs can be detected.
+        if(file.building && !outputs[file.build]){
+
+            var grunt = require("grunt");
+            var path = require("path");
+
+            outputs[file.build] = true;
+
+            var clean = path.join(file.build, "bundles");
+
+            grunt.file.delete(clean, {
+                force: true
+            });
+
+            util.log.ok("{0} : cleaned {1}".format(
+                "{0}.{1}".format("html", "bundle").cyan,
+                clean.grey
+            ));
+
+        }
 
         return new Promise(function(resolve, reject){
 

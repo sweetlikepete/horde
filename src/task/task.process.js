@@ -150,6 +150,8 @@ module.exports = {
 
                 for(var j = 0; j < files.length; j++){
 
+                    files[j].building = true;
+
                     calls.push([files[j], procs[i]]);
 
                 }
