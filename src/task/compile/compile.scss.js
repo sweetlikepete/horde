@@ -72,7 +72,7 @@ module.exports = {
 
                 try{
 
-                    var render = sass.renderSync(opts);
+                    var render = sass.renderSync(opts).css;
 
                 }catch(e){
 
@@ -82,9 +82,9 @@ module.exports = {
 
                 }
 
-                util.process.write(file.path, output, render.css, ext, task, resolve);
-
             }
+
+            util.process.write(file.path, output, render, ext, task, resolve);
 
         });
 
