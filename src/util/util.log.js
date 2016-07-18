@@ -79,7 +79,11 @@ module.exports = {
 
             }else{
 
-                if(err && err.stack){
+                if(err && err.formatted){
+                    grunt.log.error(err.formatted);
+                }else if(err && err.stack){
+                    grunt.log.error(err.stack);
+                }else if(err && err.message){
                     grunt.log.error(err.stack);
                 }else{
                     grunt.log.error(err);
