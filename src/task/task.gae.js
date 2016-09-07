@@ -79,6 +79,9 @@ module.exports = {
             args.apiPort = args.adminPort + 1;
         }
 
+        util.execSync("lsof -P | grep ':{0}' | awk '{print $2}' | xargs kill -9".format(args.port));
+        util.execSync("lsof -P | grep ':{0}' | awk '{print $2}' | xargs kill -9".format(args.adminPort));
+
         var proc = child.spawn("dev_appserver.py", [
             "--port={0}".format(args.port),
             "--admin_port={0}".format(args.adminPort),
