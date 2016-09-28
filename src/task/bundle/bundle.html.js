@@ -256,7 +256,7 @@ module.exports = {
             var clean = path.join(file.build, "bundles");
 
             grunt.file.delete(clean, {
-                force: true
+                force : true
             });
 
             util.log.ok("{0} : cleaned {1}".format(

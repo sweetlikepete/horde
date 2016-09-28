@@ -6,7 +6,7 @@
     "disallowMultipleVarDecl" : true,
     "disallowNewlineBeforeBlockStatements" : true,
     "disallowOperatorBeforeLineBreak" : ["."],
-    "disallowQuotedKeysInObjects" : "allButReserved",
+    "disallowQuotedKeysInObjects" : false,
     "disallowSpaceAfterKeywords" : [
         "if",
         "for",

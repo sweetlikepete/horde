@@ -66,13 +66,13 @@ module.exports = {
             var res = babel.transformFileSync(file.path, {
                 sourceFileName : path.relative(path.dirname(output), file.path),
                 sourceMapTarget : path.basename(output),
-                sourceMap: true,
+                sourceMap : true,
                 presets : [
                     require.resolve("babel-preset-es2015")
                 ]
             });
 
-            var sourceMappingURL = "\n//# sourceMappingURL=" + path.basename(output) + ".map"
+            var sourceMappingURL = "\n//# sourceMappingURL=" + path.basename(output) + ".map";
 
             grunt.file.write(output + ".map", JSON.stringify(res.map));
 

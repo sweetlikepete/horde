@@ -32,7 +32,7 @@ module.exports = {
 
     minify : require("./minify/minify.js"),
 
-    modernizr : require("./task.modernizr.js"), 
+    modernizr : require("./task.modernizr.js"),
 
     open : require("./task.open.js"),
 

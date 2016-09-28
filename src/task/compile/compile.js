@@ -38,7 +38,7 @@ module.exports = {
 
         coffee : require("./compile.coffee.js"),
 
-        es : require("./compile.es.js"),
+        es6 : require("./compile.es6.js"),
 
         less : require("./compile.less.js"),
 

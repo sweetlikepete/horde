@@ -72,7 +72,7 @@ module.exports = {
 
                 try{
 
-                    var render = sass.renderSync(opts).css;
+                    render = sass.renderSync(opts).css;
 
                 }catch(e){
 

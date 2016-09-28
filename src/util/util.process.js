@@ -95,7 +95,7 @@ module.exports = {
             var ignore = typeof ignore === "string" ? [ignore] : (folder.ignore ? folder.ignore.slice(0) : []);
 
             for(var i = 0; i < ignore.length; i++){
-                ignore[i] = "! " + ignore[i] + "/**";
+                ignore[i] = "! " + ignore[i] + "/**/*.*";
             }
 
             var exp = grunt.file.expand([index + "/**/*.*"].concat(ignore));

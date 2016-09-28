@@ -113,7 +113,6 @@ module.exports = function(grunt, horde, config){
 
     };
 
-
     var clean = function(){
 
         return new Promise(function(resolve, reject){
@@ -220,7 +219,11 @@ module.exports = function(grunt, horde, config){
     grunt.registerTask("update", "Update the GAE components of the application", function(){
 
         horde.util.promise()
-        .then(function(){ return horde.task.gae.update(); })
+        .then(function(){
+
+            return horde.task.gae.update();
+
+        })
         .then(function(){
 
             return complete("Update complete");
@@ -236,7 +239,11 @@ module.exports = function(grunt, horde, config){
         horde.util.promise()
         .then(clean)
         .then(build)
-        .then(function(){ return horde.task.gae.deploy({ path : config.source }); })
+        .then(function(){
+
+            return horde.task.gae.deploy({ path : config.source });
+
+        })
         .then(function(){
 
             return complete("Deploy complete");

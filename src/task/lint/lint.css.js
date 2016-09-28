@@ -98,7 +98,7 @@ var linter = function(file, options){
 
         switch(ext){
 
-            case "less" :
+            case "less" :{
 
                 var less = require("less");
 
@@ -116,9 +116,11 @@ var linter = function(file, options){
 
                 });
 
-            break;
+                break;
 
-            case "scss" :
+            }
+
+            case "scss" :{
 
                 var sass = require("node-sass");
 
@@ -140,13 +142,17 @@ var linter = function(file, options){
 
                 });
 
-            break;
+                break;
 
-            case "css" :
+            }
+
+            case "css" :{
 
                 validate(data, file, task, ext, options, resolve, reject);
 
-            break;
+                break;
+
+            }
 
         }
 

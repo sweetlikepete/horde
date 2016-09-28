@@ -66,7 +66,7 @@ module.exports = {
 
             try{
 
-                res = require('coffee-script').compile(grunt.file.read(file.path), {
+                res = require("coffee-script").compile(grunt.file.read(file.path), {
                     filename : file.path,
                     sourceMap : true
                 });
@@ -79,7 +79,7 @@ module.exports = {
 
             }
 
-            var sourceMappingURL = "\n//# sourceMappingURL=" + path.basename(output) + ".map"
+            var sourceMappingURL = "\n//# sourceMappingURL=" + path.basename(output) + ".map";
 
             grunt.file.write(output + ".map", JSON.stringify(res.v3SourceMap));
 

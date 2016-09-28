@@ -73,8 +73,10 @@ module.exports = {
             if(err instanceof Array){
 
                 for(var i = 0; i < err.length; i++){
+
                     this.raw("");
                     this.error(err[i]);
+
                 }
 
             }else{

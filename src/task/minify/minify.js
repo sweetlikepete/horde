@@ -40,7 +40,7 @@ module.exports = {
 
         coffee : require("./minify.js.js"),
 
-        es : require("./minify.js.js"),
+        es : require("./minify.es.js"),
 
         css : require("./minify.css.js"),
 

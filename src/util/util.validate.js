@@ -81,6 +81,7 @@ module.exports = {
                     });
 
                     var lineText = lines[line - 1];
+
                     lineText = lineText !== "" ? lineText.red : lineText;
 
                     data.push(["{0} | ".format(line).grey, " {0}".format(lineText)]);

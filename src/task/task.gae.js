@@ -134,7 +134,7 @@ module.exports = {
 
             if(args.id){
 
-                var proc = child.spawn("appcfg.py", [
+                proc = child.spawn("appcfg.py", [
                     "-A",
                     args.id,
                     "update",
@@ -143,7 +143,7 @@ module.exports = {
 
             }else{
 
-                var proc = child.spawn("appcfg.py", [
+                proc = child.spawn("appcfg.py", [
                     "update",
                     args.path
                 ]);
@@ -172,16 +172,16 @@ module.exports = {
 
             var child = require("child_process");
 
-            var arguments = [
+            var args = [
                 "-A",
                 args.id,
                 "rollback",
                 args.path
             ];
 
-            output("running `appcfg.py {0}`".format(arguments.join(" ")));
+            output("running `appcfg.py {0}`".format(args.join(" ")));
 
-            var proc = child.spawn("appcfg.py", arguments);
+            var proc = child.spawn("appcfg.py", args);
 
             proc.stderr.on("data", output);
 
