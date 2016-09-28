@@ -122,6 +122,15 @@ var linters = {
         options.rules = util.extend(options.config, options.rules);
 
         if(ext === "es"){
+
+            var esConfig = options.esConfig || path.join(__dirname, "config/jshint.es.json");
+
+            esConfig = JSON.parse(fs.readFileSync(esConfig, "utf8"));
+            options.rules = util.extend(options.rules, esConfig);
+
+        }
+
+        if(ext === "es"){
             options.rules["esnext"] = true;
         }
 
