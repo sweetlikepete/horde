@@ -93,7 +93,7 @@ var runPrompt = function(args){
                 default : getDefault(args),
                 choices : args.choices
             }
-        ], function(answers){
+        ]).then(function(answers){
 
             grunt.config("prompt." + args.id, answers[args.id]);
 
