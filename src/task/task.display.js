@@ -103,7 +103,7 @@ module.exports = {
                 util.formatDate(now).grey
             ));
 
-            util.execSync("say -v 'Zarvox' '{0}'&".format(message));
+            util.execSync("say -v 'Fred' '{0}'&".format(message));
 
             resolve();
 
