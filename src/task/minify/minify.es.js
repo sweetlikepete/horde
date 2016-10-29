@@ -54,6 +54,8 @@ module.exports = {
 
     file : function(file, options){
 
+        var sourceMap = options && options.es && options.es.sourceMap === true ? true : false;
+
         var babel = require("babel-core");
         var grunt = require("grunt");
         var path = require("path");
@@ -75,18 +77,26 @@ module.exports = {
             var res = babel.transformFileSync(file.path, {
                 sourceFileName : path.relative(path.dirname(output), file.path),
                 sourceMapTarget : path.basename(output),
-                sourceMap : true,
+                sourceMap : sourceMap,
                 comments : false,
                 presets : [
                     require.resolve("babel-preset-babili")
                 ]
             });
 
-            var sourceMappingURL = "\n//# sourceMappingURL=" + path.basename(output) + ".map";
+            if(sourceMap){
 
-            grunt.file.write(output + ".map", JSON.stringify(res.map));
+                var sourceMappingURL = "\n//# sourceMappingURL=" + path.basename(output) + ".map";
 
-            util.process.write(file.path, output, res.code + sourceMappingURL + "\n", ext, task, resolve);
+                grunt.file.write(output + ".map", JSON.stringify(res.map));
+
+                util.process.write(file.path, output, res.code + sourceMappingURL + "\n", ext, task, resolve);
+
+            }else{
+
+                util.process.write(file.path, output, res.code, ext, task, resolve);
+
+            }
 
         });
 

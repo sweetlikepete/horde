@@ -1,5 +1,5 @@
 {
-    "disallowDanglingUnderscores" : true,
+    "disallowDanglingUnderscores" : false,
     "disallowEmptyBlocks" : true,
     "disallowFunctionDeclarations" : true,
     "disallowMixedSpacesAndTabs" : true,
@@ -23,7 +23,7 @@
         "~",
         "!"
     ],
-    "disallowSpaceBeforeBlockStatements" : true,
+    "disallowSpaceBeforeBlockStatements" : false,
     "disallowSpaceBeforeKeywords" : [
         "else",
         "catch"

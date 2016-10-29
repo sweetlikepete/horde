@@ -63,6 +63,7 @@ module.exports = {
 
         var child = require("child_process");
         var path = require("path");
+        var fs = require("fs");
 
         args = util.extend({
             host : "localhost",
@@ -81,6 +82,10 @@ module.exports = {
 
         util.execSync("lsof -P | grep ':{0}' | awk '{print $2}' | xargs kill -9".format(args.port));
         util.execSync("lsof -P | grep ':{0}' | awk '{print $2}' | xargs kill -9".format(args.adminPort));
+
+        if(fs.existsSync(path.join(args.path, "app.local.yaml"))){
+            args.path = path.join(args.path, "app.local.yaml");
+        }
 
         var proc = child.spawn("dev_appserver.py", [
             "--port={0}".format(args.port),
