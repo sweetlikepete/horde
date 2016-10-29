@@ -276,6 +276,20 @@ module.exports = function(grunt, horde, config){
 
     });
 
+    grunt.registerTask("rollback", "Rolback the current deploy.", function(){
+
+        var done = this.async();
+
+        horde.util.promise()
+        .then(function(){
+
+            return horde.task.gae.rollback({ path : config.source });
+
+        })
+        .catch(horde.util.log.error);
+
+    });
+
 
     /* -------------------------------------------------------------------- */
     /*

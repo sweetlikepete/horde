@@ -177,16 +177,10 @@ module.exports = {
 
             var child = require("child_process");
 
-            var args = [
-                "-A",
-                args.id,
+            var proc = child.spawn("appcfg.py", [
                 "rollback",
                 args.path
-            ];
-
-            output("running `appcfg.py {0}`".format(args.join(" ")));
-
-            var proc = child.spawn("appcfg.py", args);
+            ]);
 
             proc.stderr.on("data", output);
 
