@@ -16,6 +16,8 @@
 
 module.exports = {
 
-    gae : require("./gae/gae.js")
+    gae : require("./gae/gae.js"),
+
+    gaesp : require("./gaesp/gaesp.js")
 
 };

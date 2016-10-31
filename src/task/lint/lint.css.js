@@ -31,7 +31,7 @@ var validate = function(css, file, task, ext, options, resolve, reject){
     var fs = require("fs");
 
     options = util.extend({}, options);
-    options.config = options.config || path.join(__dirname, "config/csslint.json");
+    options.config = options.config || path.join(__dirname, "../../config/csslint.json");
     options.config = JSON.parse(fs.readFileSync(options.config, "utf8"));
     options.rules = options.rules || {};
     options.rules = util.extend(options.config, options.rules);

@@ -20,6 +20,7 @@ var minify = require("./minify/minify.js");
 var bundle = require("./bundle/bundle.js");
 var lint = require("./lint/lint.js");
 var process = require("./task.process.js");
+var build = require("./build/build.js");
 
 
 /* ------------------------------------------------------------------------ */
@@ -39,7 +40,7 @@ module.exports = {
     /* -------------------------------------------------------------------- */
 
 
-    folders : function(config){
+    folders : function(config, useBuild){
 
         config = JSON.parse(JSON.stringify(config));
         config.options = config.options || {};
@@ -82,7 +83,7 @@ module.exports = {
                 allResets = allResets.concat(config.resets[reset]);
             }
 
-            var build = function(file, add){
+            var doBuild = function(file, add){
 
                 if(!add && allResets.indexOf(file) > -1){
 
@@ -109,7 +110,13 @@ module.exports = {
 
                 }else{
 
-                    process.file({
+                    var targ = process;
+
+                    if(useBuild){
+                        targ = build;
+                    }
+
+                    targ.file({
                         ext : path.extname(file).replace(/\./g, "").toLowerCase(),
                         options : folder.options,
                         folders : config.folders,
@@ -138,11 +145,11 @@ module.exports = {
 
             watcher.on("add", function(file){
 
-                build(file, true);
+                doBuild(file, true);
 
             }).on("change", function(file){
 
-                build(file);
+                doBuild(file);
 
             });
 

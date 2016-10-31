@@ -128,6 +128,7 @@ module.exports = {
                     modernizr.build(config, function(result){
 
                         var output = path.join(destination, "modernizr.js");
+                        var uglify = require("uglify-js");
 
                         util.log.ok("{0} : write : {1}".format(
                             "modernizr.json".cyan,
@@ -135,6 +136,7 @@ module.exports = {
                         ));
 
                         grunt.file.write(output, result);
+                        grunt.file.write(output, uglify.minify(output).code);
 
                         next();
 

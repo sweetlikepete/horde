@@ -18,6 +18,8 @@ module.exports = {
 
     bower : require("./task.bower.js"),
 
+    build : require("./build/build.js"),
+
     bundle : require("./bundle/bundle.js"),
 
     clean : require("./task.clean.js"),

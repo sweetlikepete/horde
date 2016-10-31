@@ -37,14 +37,14 @@ var linters = {
         var ext = path.extname(file).replace(/\./g, "").toLowerCase();
 
         options = util.extend({}, options);
-        options.config = options.config || path.join(__dirname, "config/jscs.json");
+        options.config = options.config || path.join(__dirname, "../../config/jscs.json");
         options.config = JSON.parse(fs.readFileSync(options.config, "utf8"));
         options.rules = options.lint || {};
         options.rules = util.extend(options.config, options.rules);
 
         if(ext === "es"){
 
-            var esConfig = options.esConfig || path.join(__dirname, "config/jscs.es.json");
+            var esConfig = options.esConfig || path.join(__dirname, "../../config/jscs.es.json");
 
             esConfig = JSON.parse(fs.readFileSync(esConfig, "utf8"));
             options.rules = util.extend(options.rules, esConfig);
@@ -116,14 +116,14 @@ var linters = {
         var ext = path.extname(file).replace(/\./g, "").toLowerCase();
 
         options = util.extend({}, options);
-        options.config = options.config || path.join(__dirname, "config/jshint.json");
+        options.config = options.config || path.join(__dirname, "../../config/jshint.json");
         options.config = JSON.parse(fs.readFileSync(options.config, "utf8"));
         options.rules = options.lint || {};
         options.rules = util.extend(options.config, options.rules);
 
         if(ext === "es"){
 
-            var esConfig = options.esConfig || path.join(__dirname, "config/jshint.es.json");
+            var esConfig = options.esConfig || path.join(__dirname, "../../config/jshint.es.json");
 
             esConfig = JSON.parse(fs.readFileSync(esConfig, "utf8"));
             options.rules = util.extend(options.rules, esConfig);

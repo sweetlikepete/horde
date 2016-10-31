@@ -107,6 +107,7 @@ module.exports = {
                     folders : config.folders,
                     options : folder.options,
                     build : config.build,
+                    source : config.source,
                     dest : folder.dest,
                     cwd : folder.cwd,
                     folder : folder,
