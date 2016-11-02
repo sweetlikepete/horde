@@ -158,8 +158,8 @@ module.exports = {
 
             var code = fs.readFileSync(file.path, "utf8");
 
-            code = process(code, file);
             code = minify(code, options);
+            code = process(code, file);
 
             util.process.write(file.path, output(file), code, file.ext, "build", resolve);
 

@@ -16,6 +16,10 @@
 
 var util = require("./../util/util.js");
 
+function getRandomArbitrary(min, max){
+    return Math.random() * (max - min) + min;
+}
+
 
 /* ------------------------------------------------------------------------ */
 /*
@@ -81,6 +85,10 @@ module.exports = {
 
             util.execSync("say -v 'Fred' '{0}'&".format(message));
 
+            if(getRandomArbitrary(0, 100) === 50){
+                util.execSync("say -v 'Fred' '{0}'&".format("Bleep blorp I'm a robot"));
+            }
+
             resolve();
 
         });
@@ -104,6 +112,10 @@ module.exports = {
             ));
 
             util.execSync("say -v 'Fred' '{0}'&".format(message));
+
+            if(getRandomArbitrary(0, 100) === 50){
+                util.execSync("say -v 'Fred' '{0}'&".format("You are bad an your should feel bad"));
+            }
 
             resolve();
 
