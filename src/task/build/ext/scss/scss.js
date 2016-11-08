@@ -53,8 +53,6 @@ var compile = function(file, options){
 
         }catch(e){
 
-            reject(e);
-
             return;
 
         }
@@ -104,11 +102,19 @@ module.exports = {
 
             var code = compile(file, options);
 
-            lint(file, code, options).then(function(){
+            if(code || code === ""){
 
-                util.process.write(file.path, output(file), minify(code), file.ext, "build", resolve);
+                lint(file, code, options).then(function(){
 
-            }, reject);
+                    util.process.write(file.path, output(file), minify(code), file.ext, "build", resolve);
+
+                }, reject);
+
+            }else{
+
+                reject();
+
+            }
 
         });
 

@@ -64,6 +64,27 @@ module.exports = {
 
     },
 
+    copy : function(source, destination, extension, task, resolve){
+
+        if(util.cache.cached(source, "copy", "copy")){
+            return resolve(destination);
+        }
+
+        var grunt = require("grunt");
+
+        grunt.file.copy(source, destination);
+
+        util.log.ok("{0} : copy : {1}".format(
+            "{0}.{1}".format(extension, task).cyan,
+            util.path.shorten(destination).grey
+        ));
+
+        util.cache.set(source, "copy", "copy");
+
+        resolve(destination);
+
+    },
+
     expand : function(config){
 
         config = JSON.parse(JSON.stringify(config));

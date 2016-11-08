@@ -120,6 +120,7 @@ module.exports = {
                         ext : path.extname(file).replace(/\./g, "").toLowerCase(),
                         options : folder.options,
                         folders : config.folders,
+                        source : config.source,
                         build : config.build,
                         dest : folder.dest,
                         cwd : folder.cwd,

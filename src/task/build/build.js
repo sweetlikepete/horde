@@ -29,7 +29,11 @@ var defaults = {
         "scss",
         "js",
         "es",
-        "html"
+        "html",
+        "png",
+        "jpg",
+        "jpeg",
+        "gif"
     ]
 };
 
@@ -37,7 +41,11 @@ var builders = {
     scss : require("./ext/scss/scss.js"),
     js : require("./ext/js/js.js"),
     es : require("./ext/es/es.js"),
-    html : require("./ext/html/html.js")
+    html : require("./ext/html/html.js"),
+    png : require("./ext/image/image.js"),
+    jpg : require("./ext/image/image.js"),
+    jpeg : require("./ext/image/image.js"),
+    gif : require("./ext/image/image.js")
 };
 
 
