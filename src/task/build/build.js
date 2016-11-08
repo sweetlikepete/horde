@@ -33,7 +33,10 @@ var defaults = {
         "png",
         "jpg",
         "jpeg",
-        "gif"
+        "gif",
+        "ogg",
+        "webm",
+        "mp4"
     ]
 };
 
@@ -45,7 +48,10 @@ var builders = {
     png : require("./ext/image/image.js"),
     jpg : require("./ext/image/image.js"),
     jpeg : require("./ext/image/image.js"),
-    gif : require("./ext/image/image.js")
+    gif : require("./ext/image/image.js"),
+    ogg : require("./ext/video/video.js"),
+    webm : require("./ext/video/video.js"),
+    mp4 : require("./ext/video/video.js")
 };
 
 
