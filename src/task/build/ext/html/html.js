@@ -78,7 +78,7 @@ var processInlines = function(code, file){
     var path = require("path");
     var fs = require("fs");
 
-    var tagsRE = /\<\!\-\-[ \t]{%[ \t]*inline[^\}]*?%}[ \t]\-\-\>[\s\S]*?<\!\-\-[ \t]{%[ \t]*endinline[ \t]*%}[ \t]\-\-\>/g;
+    var tagsRE = /\<\!\-\-[ \t]\<%[ \t]*inline[^\}]*?%\>[ \t]\-\-\>[\s\S]*?<\!\-\-[ \t]\<%[ \t]*endinline[ \t]*%\>[ \t]\-\-\>/g;
     var tags = code.match(tagsRE);
 
     var compressions = [];
@@ -87,7 +87,7 @@ var processInlines = function(code, file){
 
         for(var i = 0; i < tags.length; i++){
 
-            var tagPartsRE = /\<\!\-\-[ \t]{%[ \t]*inline[^\}]*?%}[ \t]\-\-\>([\s\S]*?)<\!\-\-[ \t]{%[ \t]*endinline[ \t]*%}[ \t]\-\-\>/g
+            var tagPartsRE = /\<\!\-\-[ \t]\<%[ \t]*inline[^\}]*?%\>[ \t]\-\-\>([\s\S]*?)<\!\-\-[ \t]\<%[ \t]*endinline[ \t]*%\>[ \t]\-\-\>/g
             var includesRE = /<(script|link).*?(href|src)=['"](.*?)['"].*?>/g;
             var tagParts = tagPartsRE.exec(tags[i]);
             var includes = tagParts[1].match(includesRE) || [];
@@ -171,11 +171,9 @@ module.exports = {
             }
 
             var fs = require("fs");
-
             var code = fs.readFileSync(file.path, "utf8");
 
             code = processInlines(code, file);
-
             code = minify(code, options);
 
             util.process.write(file.path, output(file), code, file.ext, "build", resolve);

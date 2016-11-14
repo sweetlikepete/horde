@@ -36,7 +36,8 @@ var defaults = {
         "gif",
         "ogg",
         "webm",
-        "mp4"
+        "mp4",
+        "json"
     ]
 };
 
@@ -51,7 +52,8 @@ var builders = {
     gif : require("./ext/image/image.js"),
     ogg : require("./ext/video/video.js"),
     webm : require("./ext/video/video.js"),
-    mp4 : require("./ext/video/video.js")
+    mp4 : require("./ext/video/video.js"),
+    json : require("./ext/json/json.js")
 };
 
 
@@ -97,6 +99,8 @@ module.exports = {
                 })
                 .then(
                     function(){
+
+                        console.log("WHATSDFASDF")
 
                         resolve();
 
