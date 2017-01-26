@@ -146,6 +146,47 @@ var processInlines = function(code, file){
 
 };
 
+var antiCache = function(code, file, options){
+
+    var refRE = /<(link|source|img).*?(href|src)=["'](.*?)["']>/g;
+    var refs = code.match(refRE);
+    var path = require("path");
+    var md5File = require("md5-file");
+    var sh = require("shorthash");
+
+    if(refs){
+
+        for(var i = 0; i < refs.length; i++){
+
+            var refPartsRE = /<(link|source|img).*?(href|src)=["'](.*?)["'].*?>/g
+            var refParts = refPartsRE.exec(refs[i]);
+            var refPath = refParts[3];
+
+            for(var j = 0; j < options.html.antiCache.length; j++){
+
+                var m = options.html.antiCache[j];
+
+                if(refPath.indexOf(m.path) === 0){
+
+                    var hash = sh.unique(md5File.sync(path.join(m.rel, refPath)));
+                    var busted = refs[i].replace(refPath, refPath + "?v=" + hash);
+
+                    code = code.replace(refs[i], busted);
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return code;
+
+};
+
 var configurePush = function(code){
 
     return code;
@@ -174,6 +215,11 @@ module.exports = {
             var code = fs.readFileSync(file.path, "utf8");
 
             code = processInlines(code, file);
+
+            /*if(options.html && options.html.antiCache){
+                code = antiCache(code, file, options);
+            }*/
+
             code = minify(code, options);
 
             util.process.write(file.path, output(file), code, file.ext, "build", resolve);

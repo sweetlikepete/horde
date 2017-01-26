@@ -100,8 +100,6 @@ module.exports = {
                 .then(
                     function(){
 
-                        console.log("WHATSDFASDF")
-
                         resolve();
 
                     },

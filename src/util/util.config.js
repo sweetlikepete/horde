@@ -14,51 +14,71 @@
 /* ------------------------------------------------------------------------ */
 
 
-module.exports = function(config){
+var extend = require("deep-extend");
 
-    var str = JSON.stringify(config);
-    var i = 0;
+var replaceStr = function(str, config){
 
-    var rep = function(match, text){
+    if(str.match(/<\%|\%>/gi)){
 
-        var variable = text.replace(/<\%|\%>/gi, "").trim().split(".");
-        var value = config;
+        var variable = str.replace(/.*?<\%(.*?)\%>.*/gi, "$1").trim().split(".");
+        var val = extend({}, config);
 
-        for(var i = 0; i < variable.length; i++){
+        variable.forEach(function(index){
+            val = val[index];
+        });
 
-            var v = variable[i];
+        str = str.replace(/(<\%.*?\%>)/gi, val);
 
-            if(value[v]){
+    }
 
-                value = value[v];
+    return str;
+
+};
+
+var replace = function(property, config){
+
+    if(typeof property === "string"){
+
+        property = replaceStr(property, config);
+
+    }else if(config[property] instanceof RegExp){
+
+    }else if(config[property] instanceof Array){
+
+        for(var i = 0; i < property.length; i++){
+            property[i] = replace(property[i], config);
+        }
+
+    }else if(property instanceof Object){
+
+        for(p in property){
+
+            var replaceKey = replaceStr(p, config);
+            var rep = replace(property[p], config);
+
+            if(p !== replaceKey){
+
+                delete property[p];
+
+                property[replaceKey] = rep;
+
 
             }else{
 
-                value = text;
-                break;
+                property[p] = rep;
 
             }
 
         }
 
-        return String(value);
-
-    };
-
-    while(true){
-
-        var s = str.replace(/(<\%.*?\%>)/gi, rep);
-
-        if(str !== s){
-            str = s;
-        }else{
-            break;
-        }
-
     }
 
-    config = JSON.parse(str);
+    return property;
 
-    return config;
+};
+
+module.exports = function(config){
+
+    return replace(config, config);
 
 };

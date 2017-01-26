@@ -46,6 +46,8 @@ module.exports = {
 
     settings : require("./task.settings.js"),
 
+    sw : require("./task.sw.js"),
+
     watch : require("./task.watch.js")
 
 };

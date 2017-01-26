@@ -50,6 +50,18 @@ module.exports = function(grunt, horde, config){
                 all : {
                     scss : {
                         includePaths : ["<% source %>"]
+                    },
+                    html : {
+                        antiCache : [
+                            {
+                                path : "/app/",
+                                rel : "<% source %>"
+                            },
+                            {
+                                path : "/static/",
+                                rel : "<% source %>"
+                            }
+                        ]
                     }
                 }
             },
@@ -89,6 +101,11 @@ module.exports = function(grunt, horde, config){
             .then(function(){
 
                 return horde.task.build.folders(config.process);
+
+            })
+            .then(function(){
+
+                return horde.task.sw.generate(config.sw);
 
             })
             .then(resolve, function(errors){
