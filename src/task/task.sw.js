@@ -24,6 +24,21 @@ var util = require("./../util/util.js");
 /* ------------------------------------------------------------------------ */
 
 
+/* ------------------------------------------------------------------------ */
+/*
+        config
+*/
+/* ------------------------------------------------------------------------ */
+
+
+var defaults = {
+    precache : {
+        ignoreUrlParametersMatching : [/./],
+        verbose : false
+    }
+};
+
+
 module.exports = {
 
 
@@ -34,27 +49,52 @@ module.exports = {
     /* -------------------------------------------------------------------- */
 
 
-    generate : function(options){
+    generate : function(workers){
+
+        var swPrecache = require("sw-precache");
 
         return new Promise(function(resolve, reject){
 
-            var swPrecache = require("sw-precache");
-            var pcOpts = options.precache;
+            var next = function(index){
 
-            var opts = util.extend({
-                ignoreUrlParametersMatching : [/./],
-                verbose : true
-            }, pcOpts);
+                index = index || 0;
 
-            swPrecache.write(options.dest, opts, function(error){
+                worker = workers[index];
 
-                if(error){
-                    reject(error);
-                }else{
+                if(!worker){
+
                     resolve();
+
+                }else{
+
+                    swPrecache.write(
+                        worker.dest,
+                        util.extend(defaults.precache, worker.precache),
+                        function(error){
+
+                            if(error){
+
+                                reject(error);
+
+                            }else{
+
+                                util.log.ok("{0} : generated : {1}".format(
+                                    "service-worker".cyan,
+                                    util.path.shorten(workers[index].dest).grey
+                                ));
+
+                            }
+
+                            next(index + 1);
+
+                        }
+                    );
+
                 }
 
-            });
+            };
+
+            next();
 
         });
 
