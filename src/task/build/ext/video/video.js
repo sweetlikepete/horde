@@ -46,7 +46,7 @@ module.exports = {
 
     build : function(file, options){
 
-        return new Promise((resolve, reject) => {
+        return new Promise(function(resolve, reject){
 
             util.process.copy(file.path, output(file), "video", "build", resolve);
 

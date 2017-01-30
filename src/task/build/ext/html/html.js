@@ -109,11 +109,11 @@ var processInlines = function(code, file){
             var styleData = "";
             var scriptData = "";
 
-            files.styles.forEach((file) => {
+            files.styles.forEach(function(file){
                 styleData += grunt.file.read(file);
             });
 
-            files.scripts.forEach((file) => {
+            files.scripts.forEach(function(file){
 
                 var UglifyJS = require("uglify-js");
                 var jsCode = grunt.file.read(file);
@@ -205,7 +205,7 @@ module.exports = {
 
     build : function(file, options){
 
-        return new Promise((resolve, reject) => {
+        return new Promise(function(resolve, reject){
 
             if(util.cache.cached(file.path, file.ext, "build")){
                 return resolve();

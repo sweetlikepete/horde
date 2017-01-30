@@ -59,7 +59,7 @@ var resolvePath = function(p, file){
 
 var processInlines = function(code, file){
 
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject){
 
         var grunt = require("grunt");
         var path = require("path");

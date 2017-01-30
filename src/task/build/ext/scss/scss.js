@@ -65,7 +65,7 @@ var compile = function(file, options){
 
 var lint = function(file, data, options){
 
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject){
 
         linter.lint(file, data, options).then(resolve, reject);
 
@@ -94,7 +94,7 @@ module.exports = {
 
     build : function(file, options){
 
-        return new Promise((resolve, reject) => {
+        return new Promise(function(resolve, reject){
 
             if(util.cache.cached(file.path, file.ext, "build")){
                 return resolve();

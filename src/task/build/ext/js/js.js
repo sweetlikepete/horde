@@ -58,7 +58,7 @@ module.exports = {
 
     build : function(file, options){
 
-        return new Promise((resolve, reject) => {
+        return new Promise(function(resolve, reject){
 
             if(util.cache.cached(file.path, file.ext, "build")){
                 return resolve();
