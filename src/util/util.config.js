@@ -18,7 +18,7 @@ var extend = require("deep-extend");
 
 var replaceStr = function(str, config){
 
-    if(str.match(/<\%|\%>/gi)){
+    if(str.match(/<\%|\%>/gi) !== null){
 
         var variable = str.replace(/.*?<\%(.*?)\%>.*/gi, "$1").trim().split(".");
         var val = extend({}, config);
@@ -41,9 +41,9 @@ var replace = function(property, config){
 
         property = replaceStr(property, config);
 
-    }else if(config[property] instanceof RegExp){
+    }else if(property instanceof RegExp){
 
-    }else if(config[property] instanceof Array){
+    }else if(property instanceof Array){
 
         for(var i = 0; i < property.length; i++){
             property[i] = replace(property[i], config);
@@ -51,25 +51,26 @@ var replace = function(property, config){
 
     }else if(property instanceof Object){
 
+        var temp = {};
+
         for(p in property){
 
-            var replaceKey = replaceStr(p, config);
+            var key = replaceStr(p, config);
             var rep = replace(property[p], config);
 
-            if(p !== replaceKey){
+            if(p !== key){
 
-                delete property[p];
-
-                property[replaceKey] = rep;
-
+                temp[key] = rep;
 
             }else{
 
-                property[p] = rep;
+                temp[p] = rep;
 
             }
 
         }
+
+        property = temp;
 
     }
 
@@ -79,6 +80,6 @@ var replace = function(property, config){
 
 module.exports = function(config){
 
-    return replace(config, config);
+    return replace(replace(config, config), config);
 
 };

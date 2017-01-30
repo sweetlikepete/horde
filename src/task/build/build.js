@@ -130,9 +130,9 @@ module.exports = {
         var files = util.process.expand(config);
         var calls = [];
 
-        builds.forEach((extension) => {
+        builds.forEach(function(extension){
 
-            files.forEach((file) => {
+            files.forEach(function(file){
 
                 if(file.ext == extension && builders[extension]){
                     calls.push(file);
