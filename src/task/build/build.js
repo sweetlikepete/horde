@@ -37,7 +37,8 @@ var defaults = {
         "ogg",
         "webm",
         "mp4",
-        "json"
+        "json",
+        "psd"
     ]
 };
 
@@ -53,7 +54,8 @@ var builders = {
     ogg : require("./ext/video/video.js"),
     webm : require("./ext/video/video.js"),
     mp4 : require("./ext/video/video.js"),
-    json : require("./ext/json/json.js")
+    json : require("./ext/json/json.js"),
+    psd : require("./ext/psd/psd.js")
 };
 
 

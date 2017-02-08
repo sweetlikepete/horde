@@ -176,11 +176,25 @@ module.exports = {
         return new Promise(function(resolve, reject){
 
             var child = require("child_process");
+            var proc;
 
-            var proc = child.spawn("appcfg.py", [
-                "rollback",
-                args.path
-            ]);
+            if(args.id){
+
+                proc = child.spawn("appcfg.py", [
+                    "-A",
+                    args.id,
+                    "rollback",
+                    args.path
+                ]);
+
+            }else{
+
+                proc = child.spawn("appcfg.py", [
+                    "rollback",
+                    args.path
+                ]);
+
+            }
 
             proc.stderr.on("data", output);
 
