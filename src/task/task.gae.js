@@ -15,6 +15,7 @@
 
 
 var util = require("./../util/util.js");
+var grunt = require("grunt");
 
 
 /* ------------------------------------------------------------------------ */
@@ -91,6 +92,7 @@ module.exports = {
             "--port={0}".format(args.port),
             "--admin_port={0}".format(args.adminPort),
             "--api_port={0}".format(args.apiPort),
+            "--clear_datastore={0}".format(args.clear ? "yes" : "no"),
             "--enable_sendmail=yes",
             "--skip_sdk_update_check=yes",
             args.path

@@ -263,13 +263,19 @@ module.exports = function(grunt, horde, config){
 
         var done = this.async();
 
+        var clear = grunt.option("clear") || false;
+
         horde.util.promise()
         .then(build)
         .then(function(){
 
             horde.task.open.url("{0}:{1}".format(config.local.url, config.local.port), true);
             horde.task.watch.folders(config.process);
-            horde.task.gae.start({ path : config.source, port : config.local.port });
+            horde.task.gae.start({
+                path : config.source,
+                port : config.local.port,
+                clear : clear
+            });
 
         })
         .catch(horde.util.log.error);
