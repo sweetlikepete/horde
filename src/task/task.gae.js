@@ -212,6 +212,163 @@ module.exports = {
 
         });
 
+    },
+
+    sync : function(args){
+
+        var child = require("child_process");
+        var fs = require("fs");
+
+        var download = function(callback){
+
+            var next = function(index){
+
+                index = index || 0;
+
+                if(index < args.models.length){
+
+                    var model = args.models[index];
+
+                    var filename = "data/{0}.sqlite".format(model);
+                    var dbName = "data/db/{0}.sql3".format(model);
+                    var dbResultsName = "data/db/{0}.results.sql3".format(model);
+                    var logName = "data/log/{0}.log".format(model);
+
+                    if(fs.existsSync(filename)){ grunt.file.delete(filename); }
+                    if(fs.existsSync(dbName)){ grunt.file.delete(dbName); }
+                    if(fs.existsSync(dbResultsName)){ grunt.file.delete(dbResultsName); }
+                    if(fs.existsSync(logName)){ grunt.file.delete(logName); }
+
+                    grunt.file.mkdir("data/log");
+                    grunt.file.mkdir("data/db");
+
+                    var flags = [
+                        "--url={0}/_ah/remote_api".format(args.production),
+                        "-A",
+                        args.id,
+                        "--filename={0}".format(filename),
+                        "--db_filename={0}".format(dbName),
+                        "--result_db_filename={0}".format(dbResultsName),
+                        "--log_file={0}".format(logName),
+                        "--kind={0}".format(model),
+                        "download_data"
+                    ];
+
+                    var proc = child.spawn("appcfg.py", flags);
+
+                    proc.stderr.on("data", output);
+
+                    proc.stderr.on("close", function(code){
+
+                        if(code instanceof Error){
+                            callback(code);
+                        }else{
+                            next(index + 1);
+                        }
+
+                    });
+
+                }else{
+
+                    callback();
+
+                }
+
+            };
+
+            next();
+
+        };
+
+        var upload = function(callback){
+
+            var next = function(index){
+
+                index = index || 0;
+
+                if(index < args.models.length){
+
+                    var model = args.models[index];
+
+                    var filename = "data/{0}.sqlite".format(model);
+                    var dbName = "data/db/{0}.progress.sql3".format(model);
+                    var logName = "data/log/{0}.upload.log".format(model);
+
+                    if(fs.existsSync(dbName)){ grunt.file.delete(dbName); }
+                    if(fs.existsSync(logName)){ grunt.file.delete(logName); }
+
+                    grunt.file.mkdir("data/log");
+                    grunt.file.mkdir("data/db");
+
+                    var flags = [
+                        "--url={0}/_ah/remote_api".format(args.local),
+                        "-A",
+                        args.id,
+                        "--filename={0}".format(filename),
+                        "--db_filename={0}".format(dbName),
+                        "--log_file={0}".format(logName),
+                        "--num_threads=1",
+                        "upload_data"
+                    ];
+
+                    console.log(flags.join(" "));
+
+                    var proc = child.spawn("appcfg.py", flags);
+
+                    proc.stderr.on("data", output);
+
+                    proc.stderr.on("close", function(code){
+
+                        if(code instanceof Error){
+                            callback(code);
+                        }else{
+                            next(index + 1);
+                        }
+
+                    });
+
+                }else{
+
+                    callback();
+
+                }
+
+            };
+
+            next();
+
+        };
+
+        return new Promise(function(resolve, reject){
+
+            download(function(downloadError){
+
+                if(downloadError){
+
+                    reject(downloadError);
+
+                }else{
+
+                    upload(function(uploadError){
+
+                        if(uploadError){
+
+                            reject(uploadError);
+
+                        }else{
+
+                            resolve();
+
+                        }
+
+                    });
+
+                }
+
+            });
+
+        });
+
     }
 
 };

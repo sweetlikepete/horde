@@ -100,6 +100,19 @@ module.exports = function(grunt, horde, config){
                 return horde.task.process.folders(config.process);
 
             })
+            .then(function(){
+
+                if(config.sw && config.publication.secure){
+
+                    return horde.task.sw.generate(config.sw);
+
+                }else{
+
+                    return horde.util.promise();
+
+                }
+
+            })
             .then(resolve, function(errors){
 
                 horde.util.log.error(errors);

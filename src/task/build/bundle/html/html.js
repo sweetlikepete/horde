@@ -41,25 +41,22 @@ var resolveBundlePaths = function(compression, file, options){
         for(var index in folders){
 
             var folder = folders[index];
-
             var re = new RegExp("^\\/{0}".format(folder.dest), "g");
+            var original = String(compression.files[i]);
+            var p = compression.files[i].replace(re, index);
 
             if(compression.files[i].match(re)){
-
-                var original = String(compression.files[i]);
-
-                var p = compression.files[i].replace(re, index);
-
                 p = p.replace(new RegExp("^" + file.source, "i"), file.build);
+            }else{
+                p = path.join(file.source, p);
+            }
 
-                var ext = path.extname(p).replace(/\./g, "").toLowerCase();
+            var ext = path.extname(p).replace(/\./g, "").toLowerCase();
 
-                if(ext === "css" || ext === "scss"){
-                    files.css.push([p, original]);
-                }else if(ext === "js" || ext === "es"){
-                    files.js.push([p, original]);
-                }
-
+            if(ext === "css" || ext === "scss"){
+                files.css.push([p, original]);
+            }else if(ext === "js" || ext === "es"){
+                files.js.push([p, original]);
             }
 
         }
@@ -86,13 +83,13 @@ var getBundles = function(file, options){
 
         for(var i = 0; i < tags.length; i++){
 
-            var tagPartsRE = /{%[ \t]*bundle[^\}][ \t]*[\'\"]([\s\S]*?)[\'\"][ \t]*?%}([\s\S]*?){%[ \t]*endbundle[ \t]*%}/g;
+            var tagPartsRE = /\{\%[ \t]bundle[ \t](.*?)[ \t]\%\}([\s\S]*?){%[ \t]*endbundle[ \t]*%\}/g;
             var includesRE = /<(script|link).*?(href|src)=['"](.*?)['"].*?>/g;
             var tagParts = tagPartsRE.exec(tags[i]);
             var includes = tagParts[2].match(includesRE) || [];
 
             var compression = {
-                target : tagParts[1],
+                target : tagParts[1].split(",")[0].replace(/\"/g, ""),
                 files : []
             };
 

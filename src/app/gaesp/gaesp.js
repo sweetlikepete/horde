@@ -125,19 +125,27 @@ module.exports = function(grunt, horde, config){
 
         return new Promise(function(resolve, reject){
 
-            horde.util.promise()
-            .then(function(){
+            if(grunt.option('dirty')){
 
-                return horde.util.cache.clean();
+                resolve();
 
-            })
-            .then(function(){
+            }else{
 
-                return horde.task.clean(config.clean);
+                horde.util.promise()
+                .then(function(){
 
-            })
-            .catch(horde.util.log.error)
-            .then(resolve);
+                    return horde.util.cache.clean();
+
+                })
+                .then(function(){
+
+                    return horde.task.clean(config.clean);
+
+                })
+                .catch(horde.util.log.error)
+                .then(resolve);
+
+            }
 
         });
 
@@ -264,6 +272,25 @@ module.exports = function(grunt, horde, config){
         })
         .catch(horde.util.log.error)
         .then(this.async());
+
+    });
+
+    grunt.registerTask("sync", "Sync the local development server with production data.", function(){
+
+        var done = this.async();
+
+        horde.util.promise()
+        .then(function(){
+
+            horde.task.gae.sync({
+                local : config.local.url + ":" + (config.local.port + 2),
+                production : config.production.url,
+                models : config.sync,
+                id : config.id
+            });
+
+        })
+        .catch(horde.util.log.error);
 
     });
 
