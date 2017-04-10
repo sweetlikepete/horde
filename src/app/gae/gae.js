@@ -28,10 +28,12 @@ module.exports = function(grunt, horde, config){
             "<% source %>/**/*.pyc",
             "<% build %>"
         ],
-        bower : {
-            file : "<% source %>/bower.json",
-            dest : "static/lib/bower"
-        },
+        bower : [
+            {
+                file : "<% source %>/bower.json",
+                dest : "static/lib/bower"
+            }
+        ],
         modernizr : {
             file : "<% source %>/modernizr.json",
             dest : "<% source %>/static/lib/modernizr"
@@ -87,7 +89,9 @@ module.exports = function(grunt, horde, config){
             horde.util.promise()
             .then(function(){
 
-                return horde.task.bower.install(config.bower.file, config.bower.dest);
+                var bower = config.bower instanceof Array ? config.bower : [config.bower];
+
+                return horde.task.bower.install(bower);
 
             })
             .then(function(){

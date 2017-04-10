@@ -66,81 +66,100 @@ module.exports = {
     /* -------------------------------------------------------------------- */
 
 
-    install : function(paths, destination){
-
-        paths = processPaths(paths, destination);
-
-        files = util.file.expand(paths);
-        files = util.cache.filter(files, "bower", "json");
+    install : function(targets){
 
         return new Promise(function(resolve, reject){
 
-            if(!files || !files.length){
-                return resolve([]);
-            }
+            var nextBower = function(indexBower){
 
-            var grunt = require("grunt");
-            var bower = require("bower");
-            var path = require("path");
+                indexBower = indexBower || 0;
 
-            var log = function(result){
-                util.log.writeln(["bower.json", result.id.cyan, result.message].join(" "));
-            };
+                if(indexBower >= targets.length){
 
-            var error = function(error){
+                    resolve();
 
-                reject(error);
+                }else{
 
-                grunt.fail.fatal(error);
+                    var paths = targets[indexBower].file;
+                    var destination = targets[indexBower].dest;
 
-            };
+                    paths = processPaths(paths, destination);
 
-            var process = function(files, index){
+                    files = util.file.expand(paths);
+                    files = util.cache.filter(files, "bower", "json");
 
-                index = index || 0;
+                    if(!files || !files.length){
+                        return nextBower(indexBower + 1);
+                    }
 
-                if(files[index]){
+                    var grunt = require("grunt");
+                    var bower = require("bower");
+                    var path = require("path");
 
-                    var next = function(){
+                    var log = function(result){
+                        util.log.writeln(["bower.json", result.id.cyan, result.message].join(" "));
+                    };
 
-                        if(files[index + 1]){
+                    var error = function(error){
 
-                            process(files, index + 1);
+                        reject(error);
 
-                        }else{
+                        grunt.fail.fatal(error);
 
-                            util.cache.set(files, "bower", "json");
+                    };
 
-                            resolve(files);
+                    var process = function(files, index){
+
+                        index = index || 0;
+
+                        if(files[index]){
+
+                            var next = function(){
+
+                                if(files[index + 1]){
+
+                                    process(files, index + 1);
+
+                                }else{
+
+                                    util.cache.set(files, "bower", "json");
+
+                                    nextBower(indexBower + 1);
+
+                                }
+
+                            };
+
+                            util.log.ok("{0} : install : {1}".format(
+                                "bower.json".cyan,
+                                util.path.shorten(files[index]).grey
+                            ));
+
+                            bower.commands.install(
+                                [],
+                                {
+                                    save : true
+                                },
+                                {
+                                    cwd : path.dirname(files[index]),
+                                    directory : destination
+                                }
+                            )
+                            .on("log", log)
+                            .on("error", error)
+                            .on("end", next);
 
                         }
 
                     };
 
-                    util.log.ok("{0} : install : {1}".format(
-                        "bower.json".cyan,
-                        util.path.shorten(files[index]).grey
-                    ));
-
-                    bower.commands.install(
-                        [],
-                        {
-                            save : true
-                        },
-                        {
-                            cwd : path.dirname(files[index]),
-                            directory : destination
-                        }
-                    )
-                    .on("log", log)
-                    .on("error", error)
-                    .on("end", next);
+                    process(files);
 
                 }
 
             };
 
-            process(files);
+            nextBower();
 
         });
 
