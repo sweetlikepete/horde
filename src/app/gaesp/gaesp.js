@@ -90,7 +90,9 @@ module.exports = function(grunt, horde, config){
             horde.util.promise()
             .then(function(){
 
-                return horde.task.bower.install(config.bower.file, config.bower.dest);
+                var bower = config.bower instanceof Array ? config.bower : [config.bower];
+
+                return horde.task.bower.install(bower);
 
             })
             .then(function(){
