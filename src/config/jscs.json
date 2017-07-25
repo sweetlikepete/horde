@@ -105,7 +105,7 @@
         "function"
     ],
     "requirePaddingNewLinesBeforeExport" : true,
-    "requirePaddingNewLinesBeforeLineComments" : true,
+    "requirePaddingNewLinesBeforeLineComments" : false,
     "requirePaddingNewlinesInBlocks" : 1,
     "requireParenthesesAroundIIFE" : true,
     "requireSemicolons" : true,
