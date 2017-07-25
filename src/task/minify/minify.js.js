@@ -55,6 +55,7 @@ module.exports = {
     file : function(file, options){
 
         var uglify = require("uglify-js");
+        var grunt = require("grunt");
 
         var input = compile.output(file);
 
@@ -69,7 +70,7 @@ module.exports = {
                 return resolve();
             }
 
-            var code = uglify.minify(input).code;
+            var code = uglify.minify(grunt.file.read(input)).code;
 
             util.process.write(file.path, output, code, file.ext, "minify", resolve);
 

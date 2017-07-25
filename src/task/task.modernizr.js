@@ -135,8 +135,7 @@ module.exports = {
                             util.path.shorten(output).grey
                         ));
 
-                        grunt.file.write(output, result);
-                        grunt.file.write(output, uglify.minify(output).code);
+                        grunt.file.write(output, uglify.minify(result).code);
 
                         next();
 

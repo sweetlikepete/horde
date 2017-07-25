@@ -28,8 +28,9 @@ var lint = require("./../../../lint/lint.js.js")
 var minify = function(file, options){
 
     var uglify = require("uglify-js");
+    var grunt = require("grunt");
 
-    return uglify.minify(file.path, {
+    return uglify.minify(grunt.file.read(file.path), {
         output : {
             comments : false
         }
