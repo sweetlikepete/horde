@@ -65,6 +65,8 @@
   },
   "devDependencies": {
     "chai": "^4.1.0",
+    "imagemin-gifsicle": "^5.2.0",
+    "imagemin-optipng": "^5.2.1",
     "mocha": "^3.4.2"
   }
 }

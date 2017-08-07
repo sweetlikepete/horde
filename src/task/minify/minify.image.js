@@ -72,6 +72,8 @@ module.exports = {
 
     file : function(file, options){
 
+        var imageminOptipng = require("imagemin-optipng");
+        var imageminGifsicle = require("imagemin-gifsicle");
         var Imagemin = require("imagemin");
         var humanize = require("humanize");
         var fse = require("fs-extra");
@@ -115,7 +117,7 @@ module.exports = {
 
                     case "png" :{
 
-                        use = Imagemin.optipng({ optimizationLevel : 3 });
+                        use = imageminOptipng({ optimizationLevel : 3 });
 
                         break;
 
@@ -123,7 +125,7 @@ module.exports = {
 
                     case "gif" :{
 
-                        use = Imagemin.gifsicle({ interlaced : true });
+                        use = imageminGifsicle({ interlaced : true });
 
                         break;
 
@@ -133,9 +135,34 @@ module.exports = {
 
                 if(use){
 
-                    var imagemin = new Imagemin().src(file.path).dest(path.dirname(file.path)).use(use);
+                    // .src(file.path).dest(path.dirname(file.path)).use(use);
 
-                    imagemin.run(function(err, minifications){
+                    Imagemin([file.path], path.dirname(file.path), {
+                        plugins : [use]
+                    }).then((files) => {
+
+                        console.log(files);
+
+                        var stat2 = fs.statSync(file.path);
+
+                        fse.copySync(file.path, cachePath(file));
+
+                        util.log.ok("{0} : write : {1} {2} → {3}".format(
+                            "{0}.{1}".format(config.ext, config.task).cyan,
+                            util.path.shorten(file.path).grey,
+                            humanize.filesize(stat1["size"]).green,
+                            humanize.filesize(stat2["size"]).green
+                        ));
+
+                        resolve();
+
+                    }, (err) => {
+
+                        reject("{0} - {1}".format(err, file.path));
+
+                    });
+
+                    /* imagemin.run(function(err, minifications){
 
                         if(err){
 
@@ -158,7 +185,7 @@ module.exports = {
 
                         }
 
-                    });
+                    }); */
 
                 }else{
 
