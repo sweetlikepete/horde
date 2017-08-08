@@ -141,8 +141,6 @@ module.exports = {
                         plugins : [use]
                     }).then((files) => {
 
-                        console.log(files);
-
                         var stat2 = fs.statSync(file.path);
 
                         fse.copySync(file.path, cachePath(file));
