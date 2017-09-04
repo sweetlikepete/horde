@@ -42,8 +42,6 @@ module.exports = {
 
         less : require("./compile.less.js"),
 
-        psd : require("./compile.psd.js"),
-
         scss : require("./compile.scss.js")
 
     },
