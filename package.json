@@ -61,9 +61,7 @@
     "shorthash": "0.0.2",
     "sw-precache": "5.2.0",
     "text-table": "0.2.0",
-    "uglify-js": "3.0.26"
-  },
-  "devDependencies": {
+    "uglify-js": "3.0.26",
     "chai": "^4.1.0",
     "imagemin-gifsicle": "^5.2.0",
     "imagemin-optipng": "^5.2.1",
